@@ -23,12 +23,13 @@ const categories = [
   { category: "Nice10", _id: "whfqwhqwhtrdvseg" },
 ];
 
-const products = [
+export const products = [
   {
     price: 123312,
     stock: 23,
     name: "Sample",
     _id: "efbhwuebef",
+    category: "whfqgfdfgwhv",
     images: [
       {
         url: "https://pngimg.com/d/dumbbell_PNG102651.png",
@@ -41,6 +42,7 @@ const products = [
     stock: 23,
     name: "Sample2",
     _id: "efbhwewweuebef",
+    category: "whfqdfgdfwhvee",
     images: [
       {
         url: "https://pngimg.com/d/dumbbell_PNG102651.png",

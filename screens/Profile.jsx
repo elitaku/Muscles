@@ -7,9 +7,9 @@ import {
     formHeading,
 } from "../styles/styles";
 import { Avatar, Button } from "react-native-paper";
-// import ButtonBox from "../components/ButtonBox";
+import ButtonBox from "../components/ButtonBox";
 import Footer from "../components/Footer";
-// import Loader from "../components/Loader";
+import Loader from "../components/Loader";
 // import { useDispatch, useSelector } from "react-redux";
 // import { loadUser, logout } from "../redux/actions/userActions";
 // import {
@@ -34,34 +34,35 @@ const Profile = ({ navigation, route }) => {
 
     // const loading = useMessageAndErrorUser(navigation, dispatch, "login");
 
-    // const logoutHandler = () => {
-    //     dispatch(logout());
-    // };
+    const logoutHandler = () => {
+        dispatch(logout());
+    };
 
-    // const navigateHandler = (text) => {
-    //     switch (text) {
-    //         case "Admin":
-    //             navigation.navigate("adminpanel");
-    //             break;
-    //         case "Orders":
-    //             navigation.navigate("orders");
-    //             break;
-    //         case "Profile":
-    //             navigation.navigate("updateprofile");
-    //             break;
-    //         case "Password":
-    //             navigation.navigate("changepassword");
-    //             break;
-    //         case "Sign Out":
-    //             logoutHandler();
-    //             break;
+    const loading = false;
+    const navigateHandler = (text) => {
+        switch (text) {
+            case "Admin":
+                navigation.navigate("adminpanel");
+                break;
+            case "Orders":
+                navigation.navigate("orders");
+                break;
+            case "Profile":
+                navigation.navigate("updateprofile");
+                break;
+            case "Password":
+                navigation.navigate("changepassword");
+                break;
+            case "Sign Out":
+                logoutHandler();
+                break;
 
-    //         default:
-    //         case "Orders":
-    //             navigation.navigate("orders");
-    //             break;
-    //     }
-    // };
+            default:
+            case "Orders":
+                navigation.navigate("orders");
+                break;
+        }
+    };
 
     // const loadingPic = useMessageAndErrorOther(dispatch, null, null, loadUser);
 
@@ -96,40 +97,44 @@ const Profile = ({ navigation, route }) => {
                 </View>
 
                 {/* Loading */}
-                <>
-                    <View style={styles.container}>
-                        <Avatar.Image
-                            source={{
-                                uri: avatar,
-                            }}
-                            size={100}
-                            style={{ backgroundColor: colors.color1 }}
-                        />
+                {loading ? (
+                    <Loader />
+                ) : (
+                    <>
+                        <View style={styles.container}>
+                            <Avatar.Image
+                                source={{
+                                    uri: avatar,
+                                }}
+                                size={100}
+                                style={{ backgroundColor: colors.color1 }}
+                            />
 
-                        <TouchableOpacity
-                            // disabled={loadingPic}
-                            onPress={() =>
-                                navigation.navigate("camera", { updateProfile: true })
-                            }
-                        >
-                            <Button
+                            <TouchableOpacity
                                 // disabled={loadingPic}
-                                // loading={loadingPic}
-                                textColor={colors.color1}
+                                onPress={() =>
+                                    navigation.navigate("camera", { updateProfile: true })
+                                }
                             >
-                                Change Photo
-                            </Button>
-                        </TouchableOpacity>
+                                <Button
+                                    // disabled={loadingPic}
+                                    // loading={loadingPic}
+                                    textColor={colors.color1}
+                                >
+                                    Change Photo
+                                </Button>
+                            </TouchableOpacity>
 
-                        <Text style={styles.name}>{user?.name}</Text>
-                        <Text
-                            style={{
-                                fontWeight: "300",
-                                color: colors.color2,
-                            }}
-                        >
-                            {user?.email}
-                        </Text>
+                            <Text style={styles.name}>{user?.name}</Text>
+                            <Text
+                                style={{
+                                    fontWeight: "300",
+                                    color: colors.color2,
+                                }}
+                            >
+                                {user?.email}
+                            </Text>
+                        </View>
 
                         <View>
                             <View
@@ -139,24 +144,30 @@ const Profile = ({ navigation, route }) => {
                                     justifyContent: "space-between",
                                 }}
                             >
-                                {/* <ButtonBox
+                                <ButtonBox
                                     handler={navigateHandler}
                                     text={"Orders"}
                                     icon={"format-list-bulleted-square"}
                                 />
-                                {user?.role === "admin" && (
+                                {/* {user?.role === "admin" && (
                                     <ButtonBox
                                         handler={navigateHandler}
                                         icon={"view-dashboard"}
                                         text={"Admin"}
                                         reverse={true}
                                     />
-                                )}
+                                )} */}
+                                <ButtonBox
+                                    handler={navigateHandler}
+                                    icon={"view-dashboard"}
+                                    text={"Admin"}
+                                    reverse={true}
+                                />
                                 <ButtonBox
                                     handler={navigateHandler}
                                     text={"Profile"}
                                     icon={"pencil"}
-                                /> */}
+                                />
                             </View>
 
                             <View
@@ -166,7 +177,7 @@ const Profile = ({ navigation, route }) => {
                                     justifyContent: "space-evenly",
                                 }}
                             >
-                                {/* <ButtonBox
+                                <ButtonBox
                                     handler={navigateHandler}
                                     text={"Password"}
                                     icon={"pencil"}
@@ -175,13 +186,11 @@ const Profile = ({ navigation, route }) => {
                                     handler={navigateHandler}
                                     text={"Sign Out"}
                                     icon={"exit-to-app"}
-                                /> */}
+                                />
                             </View>
                         </View>
-                    </View>
-
-
-                </>
+                    </>
+                )}
             </View>
 
             <Footer />
