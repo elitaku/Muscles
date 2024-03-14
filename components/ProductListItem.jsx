@@ -14,14 +14,14 @@ const ProductListItem = ({
     category,
     imgSrc,
 }) => {
-    // const [openModal, setOpenModal] = useState(false);
+    const [openModal, setOpenModal] = useState(false);
 
     return (
         <>
             <TouchableOpacity
                 activeOpacity={0.9}
-                // onLongPress={() => setOpenModal((prev) => !prev)}
-                onLongPress={() => deleteHandler(id)}
+                onLongPress={() => setOpenModal((prev) => !prev)}
+                // onLongPress={() => deleteHandler(id)}
                 onPress={() => navigate.navigate("productdetails", { id })}
             >
                 <View
