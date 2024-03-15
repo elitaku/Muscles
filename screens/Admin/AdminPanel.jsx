@@ -7,7 +7,7 @@ import ButtonBox from "../../components/ButtonBox";
 import ProductListHeading from "../../components/ProductListHeading";
 import ProductListItem from "../../components/ProductListItem";
 import { products} from "../Home";
-// import Chart from "../../components/Chart";
+import Chart from "../../components/Chart";
 // import { useAdminProducts, useMessageAndErrorOther } from "../../utils/hooks";
 // import { useDispatch } from "react-redux";
 // import { useIsFocused } from "@react-navigation/native";
@@ -77,7 +77,7 @@ const AdminPanel = ({ navigation }) => {
                             alignItems: "center",
                         }}
                     >
-                        {/* <Chart inStock={inStock} outOfStock={outOfStock} /> */}
+                        <Chart inStock={12} outOfStock={2} />
                     </View>
 
                     <View>

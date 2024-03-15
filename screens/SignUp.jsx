@@ -63,6 +63,7 @@ const SignUp = ({ navigation, route }) => {
     useEffect(() => {
         if (route.params?.image) setAvatar(route.params.image);
     }, [route.params]);
+    
     return (
         <>
             <View style={defaultStyle}>

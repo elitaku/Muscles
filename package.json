@@ -12,11 +12,15 @@
     "@react-navigation/native": "^6.1.12",
     "@react-navigation/native-stack": "^6.9.20",
     "expo": "~50.0.7",
+    "expo-camera": "^14.1.1",
+    "expo-image-picker": "^14.7.1",
     "expo-status-bar": "~1.11.1",
     "react": "18.2.0",
     "react-native": "0.73.4",
+    "react-native-chart-kit": "^6.12.0",
     "react-native-paper": "^5.12.3",
     "react-native-snap-carousel": "^3.9.1",
+    "react-native-svg": "^15.1.0",
     "react-native-toast-message": "^2.2.0"
   },
   "devDependencies": {

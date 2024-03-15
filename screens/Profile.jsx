@@ -87,6 +87,13 @@ const Profile = ({ navigation, route }) => {
     //         setAvatar(user.avatar.url);
     //     }
     // }, [user]);
+    
+    useEffect(() => {
+        if (route.params?.image) {
+            setAvatar(route.params.image);
+            // dispatch updatePic Here
+        }
+    }, [route.params]);
 
     return (
         <>

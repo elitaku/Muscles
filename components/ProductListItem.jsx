@@ -1,7 +1,7 @@
 import { View, Text, TouchableOpacity, StyleSheet, Image } from "react-native";
 import React, { useState } from "react";
 import { colors } from "../styles/styles";
-// import MyModal from "../components/MyModal";
+import MyModal from "../components/MyModal";
 
 const ProductListItem = ({
     navigate,
@@ -83,14 +83,14 @@ const ProductListItem = ({
                 </View>
             </TouchableOpacity>
 
-            {/* {openModal && (
+            {openModal && (
                 <MyModal
                     id={id}
                     deleteHandler={deleteHandler}
                     navigate={navigate}
                     setOpenModal={setOpenModal}
                 />
-            )} */}
+            )}
         </>
     );
 };

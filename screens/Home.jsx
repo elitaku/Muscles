@@ -29,7 +29,7 @@ export const products = [
     stock: 23,
     name: "Sample",
     _id: "efbhwuebef",
-    category: "whfqgfdfgwhv",
+    category: "Harry Potter",
     images: [
       {
         url: "https://pngimg.com/d/dumbbell_PNG102651.png",
@@ -42,10 +42,35 @@ export const products = [
     stock: 23,
     name: "Sample2",
     _id: "efbhwewweuebef",
+    category: "Laptop",
+    images: [
+      {
+        url: "https://setgis.net/images/spongebob_meme.png",
+      },
+    ],
+  },
+  {
+    price: 36546,
+    stock: 23,
+    name: "Sample",
+    _id: "efbhwfsfduebef",
+    category: "whfqgfdfgwhv",
+    images: [
+      {
+        url: "https://th.bing.com/th/id/R.a59546bf83f141e18a3181d761d5ca02?rik=TdNF5TC55Xk0JA&riu=http%3a%2f%2fpngimg.com%2fuploads%2fshrek%2fshrek_PNG16.png&ehk=g%2fTbGNEQI%2fiwTHqNIA5k2AauC9JH23hGvuqAYQKxdzM%3d&risl=&pid=ImgRaw&r=0",
+      },
+    ],
+  },
+
+  {
+    price: 67567,
+    stock: 23,
+    name: "Sample2",
+    _id: "retw4t45y",
     category: "whfqdfgdfwhvee",
     images: [
       {
-        url: "https://pngimg.com/d/dumbbell_PNG102651.png",
+        url: "https://animedork.com/wp-content/uploads/2022/11/Mash-Burnedead.png",
       },
     ],
   },

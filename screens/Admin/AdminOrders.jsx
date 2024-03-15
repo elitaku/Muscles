@@ -1,61 +1,36 @@
 import { View, Text, ScrollView } from "react-native";
 import React from "react";
-import { colors, defaultStyle, formHeading } from "../styles/styles";
-import Header from "../components/Header";
-import Loader from "../components/Loader";
-import { Headline } from "react-native-paper";
-import OrderItem from "../components/OrderItem";
-// import { useGetOrders } from "../utils/hooks";
+import { colors, defaultStyle, formHeading } from "../../styles/styles";
+import Header from "../../components/Header";
+import Loader from "../../components/Loader";
+import OrderItem from "../../components/OrderItem";
+import { orders } from "../Orders";
+// import { useGetOrders, useMessageAndErrorOther } from "../../utils/hooks";
 // import { useIsFocused } from "@react-navigation/native";
+// import { Headline } from "react-native-paper";
+// import { useDispatch } from "react-redux";
+// import { processOrder } from "../../redux/actions/otherAction";
 
-export const orders = [
-    {
-    _id: "0123",
-    shippingInfo: {
-        address: "123 ABC",
-        city: "Taguig City",
-        country: "Philippines",
-        pinCode: "123456",
-    },
-    createdAt: "2021-09-01T00:00:00.000Z",
-    orderStatus:"Processing",
-    paymentMethod: "COD",
-    totalAmount: 50000
-    },
-    {
-        _id: "0456",
-        shippingInfo: {
-            address: "123 ABC",
-            city: "Taguig City",
-            country: "Philippines",
-            pinCode: "123456",
-        },
-        createdAt: "2021-09-01T00:00:00.000Z",
-        orderStatus:"Processing",
-        paymentMethod: "ONLINE",
-        totalAmount: 200000
-    },
-    {
-        _id: "0789",
-        shippingInfo: {
-            address: "123 ABC",
-            city: "Taguig City",
-            country: "Philippines",
-            pinCode: "123456",
-        },
-        createdAt: "2021-09-01T00:00:00.000Z",
-        orderStatus:"Processing",
-        paymentMethod: "COD",
-        totalAmount: 200000
-    },
-
-]
-
-const Orders = () => {
+const AdminOrders = ({ navigation }) => {
     // const isFocused = useIsFocused();
-    // const { loading, orders } = useGetOrders(isFocused);
+    // const dispatch = useDispatch();
+
+    // const { loading, orders } = useGetOrders(isFocused, true);
+
+    // const processOrderLoading = useMessageAndErrorOther(
+    //     dispatch,
+    //     navigation,
+    //     "adminpanel"
+    // );
+
+    const processOrderLoading = false;
+
+
     const loading = false;
 
+    const updateHandler = (id) => {
+        // dispatch(processOrder(id));
+    };
     return (
         <View
             style={{
@@ -67,7 +42,7 @@ const Orders = () => {
 
             {/* Heading */}
             <View style={{ marginBottom: 20, paddingTop: 70 }}>
-                <Text style={formHeading}>Orders</Text>
+                <Text style={formHeading}>All Orders</Text>
             </View>
 
             {loading ? (
@@ -91,6 +66,9 @@ const Orders = () => {
                                     paymentMethod={item.paymentMethod}
                                     orderedOn={item.createdAt.split("T")[0]}
                                     address={`${item.shippingInfo.address}, ${item.shippingInfo.city}, ${item.shippingInfo.country} ${item.shippingInfo.pinCode}`}
+                                    admin={true}
+                                    updateHandler={updateHandler}
+                                    loading={processOrderLoading}
                                 />
                             ))
                         ) : (
@@ -103,4 +81,4 @@ const Orders = () => {
     );
 };
 
-export default Orders;
+export default AdminOrders;
