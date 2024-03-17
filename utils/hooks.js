@@ -1,6 +1,7 @@
 import { useEffect } from "react"
 import Toast from "react-native-toast-message"
 import { useSelector } from "react-redux"
+import { loadUser } from "../redux/actions/userActions"
 
 export const useMessageAndErrorUser = (navigation, dispatch, navigateTo = "login") => {
     
@@ -21,7 +22,10 @@ export const useMessageAndErrorUser = (navigation, dispatch, navigateTo = "login
     }
     
     if(message){
-      navigation.navigate(navigateTo)
+      navigation.reset({
+        index: 0,
+        routes:[{name: navigateTo}]
+      })
       Toast.show({
         type: "success",
         text1: message
@@ -29,6 +33,7 @@ export const useMessageAndErrorUser = (navigation, dispatch, navigateTo = "login
       dispatch({
         type: "clearMessage"
       })
+      dispatch(loadUser())
     }
   },[error, message, dispatch])
 

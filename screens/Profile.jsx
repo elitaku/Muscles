@@ -10,8 +10,9 @@ import { Avatar, Button } from "react-native-paper";
 import ButtonBox from "../components/ButtonBox";
 import Footer from "../components/Footer";
 import Loader from "../components/Loader";
-// import { useDispatch, useSelector } from "react-redux";
-// import { loadUser, logout } from "../redux/actions/userActions";
+import { useDispatch } from "react-redux";
+import { useMessageAndErrorUser } from "../utils/hooks";
+import { logout } from "../redux/actions/userActions";
 // import {
 //     useMessageAndErrorOther,
 //     useMessageAndErrorUser,
@@ -29,16 +30,16 @@ const Profile = ({ navigation, route }) => {
     // const { user } = useSelector((state) => state.user);
     const [avatar, setAvatar] = useState(defaultImg);
 
-    // const dispatch = useDispatch();
+    const dispatch = useDispatch();
     // const isFocused = useIsFocused();
 
-    // const loading = useMessageAndErrorUser(navigation, dispatch, "login");
+    
+    const loading = useMessageAndErrorUser(navigation, dispatch, "login");
 
     const logoutHandler = () => {
         dispatch(logout());
     };
 
-    const loading = false;
     const navigateHandler = (text) => {
         switch (text) {
             case "Admin":
