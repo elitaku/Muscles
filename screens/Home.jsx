@@ -8,7 +8,8 @@ import ProductCard from "../components/ProductCard";
 import { useNavigation } from "@react-navigation/native";
 import Footer from "../components/Footer";
 import Heading from "../components/Heading";
-import { Toast } from "react-native-paper";
+/* import { Toast } from "react-native-paper"; */
+import Toast from 'react-native-toast-message';
 
 const categories = [
   { category: "Nice", _id: "whfqwhv" },
