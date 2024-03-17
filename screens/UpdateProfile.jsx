@@ -1,5 +1,5 @@
 import { View, Text, ScrollView } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
     colors,
     defaultStyle,
@@ -9,46 +9,35 @@ import {
 } from "../styles/styles";
 import { Button, TextInput } from "react-native-paper";
 import Header from "../components/Header";
-// import { useDispatch, useSelector } from "react-redux";
-// import { updateProfile } from "../redux/actions/otherAction";
-// import { useMessageAndErrorOther } from "../utils/hooks";
+import { useDispatch, useSelector } from "react-redux";
+import { updateProfile } from "../redux/actions/otherActions";
+import { useMessageAndErrorOther } from "../utils/hooks";
+import { loadUser } from "../redux/actions/userActions";
+import { useIsFocused } from "@react-navigation/native";
 
 const UpdateProfile = ({ navigation }) => {
-    // const { user } = useSelector((state) => state.user);
+    const { user } = useSelector(state => state.user);
 
-    // const [name, setName] = useState(user?.name);
-    // const [email, setEmail] = useState(user?.email);
-    // const [address, setAddress] = useState(user?.address);
-    // const [city, setCity] = useState(user?.city);
-    // const [country, setCountry] = useState(user?.country);
-    // const [pinCode, setPinCode] = useState(user?.pinCode.toString());
+    const [name, setName] = useState(user?.name);
+    const [email, setEmail] = useState(user?.email);
+    const [address, setAddress] = useState(user?.address);
+    const [city, setCity] = useState(user?.city);
+    const [country, setCountry] = useState(user?.country);
+    const [pinCode, setPinCode] = useState(user?.pinCode.toString());
 
-    const [name, setName] = useState("");
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [address, setAddress] = useState("");
-    const [city, setCity] = useState("");
-    const [country, setCountry] = useState("");
-    const [pinCode, setPinCode] = useState("");
+    const dispatch = useDispatch();
+    const isFocused = useIsFocused();
 
-    // const dispatch = useDispatch();
-
-    // const loading = useMessageAndErrorOther(dispatch, navigation, "profile");
-
-    // const submitHandler = () => {
-    //     dispatch(updateProfile(name, email, address, city, country, pinCode));
-    // };
-
-        const disableBtn =
-        !name || !email || !address || !city || !country || !pinCode;
-
+    const loading = useMessageAndErrorOther(dispatch, navigation, "profile")
 
     const submitHandler = () => {
-        // dispatch(forgetPassword(email));
-        alert("shEysh");
-
-        // navigation.navigate("login");
+        dispatch(updateProfile(name, email, address, city, country, pinCode));
     };
+
+    useEffect(() => {
+        dispatch(loadUser())
+    }, [dispatch, isFocused]);
+
     return (
         <View style={defaultStyle}>
             <Header back={true} />
@@ -110,7 +99,7 @@ const UpdateProfile = ({ navigation }) => {
                     />
 
                     <Button
-                        // loading={loading}
+                        loading={loading}
                         textColor={colors.color2}
                         style={styles.btn}
                         onPress={submitHandler}

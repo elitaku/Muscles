@@ -11,15 +11,14 @@ import ButtonBox from "../components/ButtonBox";
 import Footer from "../components/Footer";
 import Loader from "../components/Loader";
 import { useDispatch, useSelector } from "react-redux";
-import { useMessageAndErrorUser } from "../utils/hooks";
-import { logout } from "../redux/actions/userActions";
-// import {
-//     useMessageAndErrorOther,
-//     useMessageAndErrorUser,
-// } from "../utils/hooks";
-// import { useIsFocused } from "@react-navigation/native";
-// import mime from "mime";
-// import { updatePic } from "../redux/actions/otherAction";
+import { loadUser, logout } from "../redux/actions/userActions";
+import {
+    useMessageAndErrorOther,
+    useMessageAndErrorUser,
+} from "../utils/hooks";
+import { useIsFocused } from "@react-navigation/native";
+import mime from "mime";
+import { updatePic } from "../redux/actions/otherActions";
 
 
 const Profile = ({ navigation, route }) => {
@@ -27,8 +26,7 @@ const Profile = ({ navigation, route }) => {
     const [avatar, setAvatar] = useState(user?.avatar ? user.avatar.url : defaultImg);
 
     const dispatch = useDispatch();
-    // const isFocused = useIsFocused();
-
+    const isFocused = useIsFocused();
     
     const loading = useMessageAndErrorUser(navigation, dispatch, "login");
 
@@ -61,36 +59,38 @@ const Profile = ({ navigation, route }) => {
         }
     };
 
-    // const loadingPic = useMessageAndErrorOther(dispatch, null, null, loadUser);
+    const loadingPic = useMessageAndErrorOther(dispatch, null, null, loadUser);
 
-    // useEffect(() => {
-    //     if (route.params?.image) {
-    //         setAvatar(route.params.image);
-    //         // dispatch updatePic Here
-    //         const myForm = new FormData();
-    //         myForm.append("file", {
-    //             uri: route.params.image,
-    //             type: mime.getType(route.params.image),
-    //             name: route.params.image.split("/").pop(),
-    //         });
-    //         dispatch(updatePic(myForm));
-    //     }
-
-    //     dispatch(loadUser());
-    // }, [route.params, dispatch, isFocused]);
-
-    // useEffect(() => {
-    //     if (user?.avatar) {
-    //         setAvatar(user.avatar.url);
-    //     }
-    // }, [user]);
-    
     useEffect(() => {
         if (route.params?.image) {
             setAvatar(route.params.image);
             // dispatch updatePic Here
+            const myForm = new FormData();
+            myForm.append("file", {
+                uri: route.params.image,
+                type: mime.getType(route.params.image),
+                name: route.params.image.split("/").pop(),
+            });
+            dispatch(updatePic(myForm));
         }
-    }, [route.params]);
+
+        dispatch(loadUser());
+    }, [route.params, dispatch, isFocused]);
+
+    useEffect(() => {
+        if (user?.avatar) {
+            setAvatar(user.avatar.url);
+        }
+    }, [user]);
+    
+    // useEffect(() => {
+    //     if (route.params?.image) {
+    //         setAvatar(route.params.image);
+    //         // dispatch updatePic Here
+    //     }
+
+    //     dispatch(loadUser())
+    // }, [route.params, dispatch, isFocused]);
 
     return (
         <>
@@ -115,14 +115,14 @@ const Profile = ({ navigation, route }) => {
                             />
 
                             <TouchableOpacity
-                                // disabled={loadingPic}
+                                disabled={loadingPic}
                                 onPress={() =>
                                     navigation.navigate("camera", { updateProfile: true })
                                 }
                             >
                                 <Button
-                                    // disabled={loadingPic}
-                                    // loading={loadingPic}
+                                    disabled={loadingPic}
+                                    loading={loadingPic}
                                     textColor={colors.color1}
                                 >
                                     Change Photo

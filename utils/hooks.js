@@ -66,7 +66,7 @@ export const useMessageAndErrorOther = (dispatch, navigation, navigateTo, func) 
         type: "clearMessage"
       })
 
-      navigateTo && navigation.navigation(navigateTo)
+      navigateTo && navigation.navigate(navigateTo)
 
       func && dispatch(func())
 

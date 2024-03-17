@@ -32,10 +32,9 @@ const Main = () => {
   const dispatch = useDispatch()
 
   const { user } = useSelector( (state) => state.user )
-  console.log( user )
 
   useEffect(() => {
-    dispatch(loadUser)
+    dispatch(loadUser())
   }, [dispatch])
 
   return (
