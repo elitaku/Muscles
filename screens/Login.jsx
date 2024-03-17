@@ -9,14 +9,23 @@ import {
 } from "../styles/styles";
 import { Button, TextInput } from "react-native-paper";
 import Footer from "../components/Footer";
-
+import { useDispatch, useSelector } from "react-redux"
+import { login } from "../redux/actions/userActions";
 
 const Login = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const dispatch = useDispatch()
+  const {loading, message, error, isAuthenticated} = useSelector(
+    (state) => state.user
+  )
+
+  console.log(message, error, isAuthenticated)
+
   const submitHandler = () => {
     alert("WEYT LANG DI KA MAKAKAPAGLOGIN PWEDE CHILLLLLLLL????????");
+    dispatch(login(email, password))
   };
 
   return (

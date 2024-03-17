@@ -7,4 +7,4 @@ export const store = configureStore({
     },
 })
 
-export const server = "https://mooskles-server.onrender.com"
+export const server = "https://mooskles-server.onrender.com/api/v1"
