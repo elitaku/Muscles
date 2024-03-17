@@ -57,7 +57,7 @@ const Login = ({ navigation }) => {
           </TouchableOpacity>
 
           <Button
-            //loading={loading}
+            loading={loading}
             textColor={colors.color2}
             disabled={email === "" || password === ""}
             style={styles.btn}

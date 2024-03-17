@@ -10,7 +10,7 @@ import { Avatar, Button } from "react-native-paper";
 import ButtonBox from "../components/ButtonBox";
 import Footer from "../components/Footer";
 import Loader from "../components/Loader";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useMessageAndErrorUser } from "../utils/hooks";
 import { logout } from "../redux/actions/userActions";
 // import {
@@ -21,14 +21,10 @@ import { logout } from "../redux/actions/userActions";
 // import mime from "mime";
 // import { updatePic } from "../redux/actions/otherAction";
 
-const user = {
-    name: "Mash Burnedead",
-    email: "mash@gmail.com"
-}
 
 const Profile = ({ navigation, route }) => {
-    // const { user } = useSelector((state) => state.user);
-    const [avatar, setAvatar] = useState(defaultImg);
+    const { user } = useSelector((state) => state.user);
+    const [avatar, setAvatar] = useState(user.avatar ? user.avatar.url : defaultImg);
 
     const dispatch = useDispatch();
     // const isFocused = useIsFocused();
@@ -157,20 +153,15 @@ const Profile = ({ navigation, route }) => {
                                     text={"Orders"}
                                     icon={"format-list-bulleted-square"}
                                 />
-                                {/* {user?.role === "admin" && (
+                                {user?.role === "admin" && (
                                     <ButtonBox
                                         handler={navigateHandler}
                                         icon={"view-dashboard"}
                                         text={"Admin"}
                                         reverse={true}
                                     />
-                                )} */}
-                                <ButtonBox
-                                    handler={navigateHandler}
-                                    icon={"view-dashboard"}
-                                    text={"Admin"}
-                                    reverse={true}
-                                />
+                                )}
+                                
                                 <ButtonBox
                                     handler={navigateHandler}
                                     text={"Profile"}
