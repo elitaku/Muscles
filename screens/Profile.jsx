@@ -24,7 +24,7 @@ import { logout } from "../redux/actions/userActions";
 
 const Profile = ({ navigation, route }) => {
     const { user } = useSelector((state) => state.user);
-    const [avatar, setAvatar] = useState(user.avatar ? user.avatar.url : defaultImg);
+    const [avatar, setAvatar] = useState(user?.avatar ? user.avatar.url : defaultImg);
 
     const dispatch = useDispatch();
     // const isFocused = useIsFocused();
