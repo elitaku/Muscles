@@ -93,7 +93,6 @@ const Payment = ({ navigation, route }) => {
         codHandler({ id: paymentIntent.id, status: paymentIntent.status });
       }
     } catch (error) {
-      console.log(error)
       return Toast.show({
         type: "error",
         text1: "Some Error",
