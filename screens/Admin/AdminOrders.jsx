@@ -5,17 +5,17 @@ import Header from "../../components/Header";
 import Loader from "../../components/Loader";
 import OrderItem from "../../components/OrderItem";
 import { orders } from "../Orders";
-// import { useGetOrders, useMessageAndErrorOther } from "../../utils/hooks";
-// import { useIsFocused } from "@react-navigation/native";
-// import { Headline } from "react-native-paper";
-// import { useDispatch } from "react-redux";
+import { useGetOrders, useMessageAndErrorOther } from "../../utils/hooks";
+import { useIsFocused } from "@react-navigation/native";
+import { Headline } from "react-native-paper";
+import { useDispatch } from "react-redux";
 // import { processOrder } from "../../redux/actions/otherAction";
 
 const AdminOrders = ({ navigation }) => {
-    // const isFocused = useIsFocused();
-    // const dispatch = useDispatch();
+    const isFocused = useIsFocused();
+    const dispatch = useDispatch();
 
-    // const { loading, orders } = useGetOrders(isFocused, true);
+    const { loading, orders } = useGetOrders(isFocused, true);
 
     // const processOrderLoading = useMessageAndErrorOther(
     //     dispatch,
@@ -24,9 +24,6 @@ const AdminOrders = ({ navigation }) => {
     // );
 
     const processOrderLoading = false;
-
-
-    const loading = false;
 
     const updateHandler = (id) => {
         // dispatch(processOrder(id));

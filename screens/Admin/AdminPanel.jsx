@@ -6,13 +6,14 @@ import Loader from "../../components/Loader";
 import ButtonBox from "../../components/ButtonBox";
 import ProductListHeading from "../../components/ProductListHeading";
 import ProductListItem from "../../components/ProductListItem";
-import { products} from "../Home";
 import Chart from "../../components/Chart";
 // import { useAdminProducts, useMessageAndErrorOther } from "../../utils/hooks";
 // import { useDispatch } from "react-redux";
 // import { useIsFocused } from "@react-navigation/native";
 // import { deleteProduct } from "../../redux/actions/otherAction";
 // import { getAdminProducts } from "../../redux/actions/productAction";
+
+const products = []
 
 const AdminPanel = ({ navigation }) => {
     // const dispatch = useDispatch();

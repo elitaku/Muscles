@@ -5,56 +5,13 @@ import Header from "../components/Header";
 import Loader from "../components/Loader";
 import { Headline } from "react-native-paper";
 import OrderItem from "../components/OrderItem";
-// import { useGetOrders } from "../utils/hooks";
-// import { useIsFocused } from "@react-navigation/native";
+import { useGetOrders } from "../utils/hooks";
+import { useIsFocused } from "@react-navigation/native";
 
-export const orders = [
-    {
-    _id: "0123",
-    shippingInfo: {
-        address: "123 ABC",
-        city: "Taguig City",
-        country: "Philippines",
-        pinCode: "123456",
-    },
-    createdAt: "2021-09-01T00:00:00.000Z",
-    orderStatus:"Processing",
-    paymentMethod: "COD",
-    totalAmount: 50000
-    },
-    {
-        _id: "0456",
-        shippingInfo: {
-            address: "123 ABC",
-            city: "Taguig City",
-            country: "Philippines",
-            pinCode: "123456",
-        },
-        createdAt: "2021-09-01T00:00:00.000Z",
-        orderStatus:"Processing",
-        paymentMethod: "ONLINE",
-        totalAmount: 200000
-    },
-    {
-        _id: "0789",
-        shippingInfo: {
-            address: "123 ABC",
-            city: "Taguig City",
-            country: "Philippines",
-            pinCode: "123456",
-        },
-        createdAt: "2021-09-01T00:00:00.000Z",
-        orderStatus:"Processing",
-        paymentMethod: "COD",
-        totalAmount: 200000
-    },
-
-]
 
 const Orders = () => {
-    // const isFocused = useIsFocused();
-    // const { loading, orders } = useGetOrders(isFocused);
-    const loading = false;
+    const isFocused = useIsFocused();
+    const { loading, orders } = useGetOrders(isFocused);
 
     return (
         <View
