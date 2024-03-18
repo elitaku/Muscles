@@ -3,12 +3,17 @@ import React from "react";
 import { Avatar } from "react-native-paper";
 import { colors } from "../styles/styles";
 import { useNavigation, useRoute } from "@react-navigation/native";
+import { useDispatch } from "react-redux";
 
 const Header = ({ back, emptyCart = false }) => {
   const navigate = useNavigation();
   const route = useRoute();
+  const dispatch = useDispatch();
+  
   const emptyCartHandler = () => {
-    console.log("empty cart");
+    dispatch({
+      type: "clearCart"
+    })
   };
 
   return (
