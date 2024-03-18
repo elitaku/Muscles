@@ -63,7 +63,20 @@ const ProductDetails = ({ route: { params } }) => {
         type: "error",
         text1: "Out Of Stock",
       });
-    console.log("Added to cart", quantity);
+    
+    dispatch({
+      type: "addToCart",
+      payload: {
+        product:
+          params.id,
+          name,
+          price,
+          image: images[0]?.url,
+          stock,
+          quantity,
+      }
+    })
+    
     Toast.show({
       type: "success",
       text1: "Added To Cart",

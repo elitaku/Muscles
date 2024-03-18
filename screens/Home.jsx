@@ -37,6 +37,20 @@ const Home = () => {
         type: "error",
         text1: "Out Of Stock",
       });
+    
+    dispatch({
+      type: "addToCart",
+      payload: {
+        product:
+          id,
+          name,
+          price,
+          image,
+          stock,
+          quantity: 1,
+      }
+    })
+    
     Toast.show({
       type: "success",
       text1: "Added To Cart",
