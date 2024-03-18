@@ -7,60 +7,13 @@ import { Button } from "react-native-paper";
 import { colors } from "../styles/styles";
 import CartItem from "../components/CartItem";
 import { useNavigation } from "@react-navigation/native";
-
-export const cartItems = [
-  {
-    name: "Xiaomi",
-    image: "https://pngimg.com/d/dumbbell_PNG102651.png",
-    product: "cbfwbbwcc",
-    stock: 5,
-    price: 150,
-    quantity: 2,
-  },
-  {
-    name: "Poco",
-    image: "https://pngimg.com/d/dumbbell_PNG102651.png",
-    product: "cbfwbbrwcc",
-    stock: 5,
-    price: 1520,
-    quantity: 1,
-  },
-  {
-    name: "Redmi",
-    image: "https://pngimg.com/d/dumbbell_PNG102651.png",
-    product: "cbfwbeewefbwcc",
-    stock: 5,
-    price: 1504,
-    quantity: 2,
-  },
-  {
-    name: "Xiaomi",
-    image: "https://pngimg.com/d/dumbbell_PNG102651.png",
-    product: "cbfwbngfnbwcc",
-    stock: 5,
-    price: 150,
-    quantity: 2,
-  },
-  {
-    name: "Poco",
-    image: "https://pngimg.com/d/dumbbell_PNG102651.png",
-    product: "cbfwbfgnbrwcc",
-    stock: 5,
-    price: 1520,
-    quantity: 1,
-  },
-  {
-    name: "Redmi",
-    image: "https://pngimg.com/d/dumbbell_PNG102651.png",
-    product: "cbfwbeewgnefbwcc",
-    stock: 5,
-    price: 1504,
-    quantity: 2,
-  },
-];
+import { useDispatch, useSelector } from "react-redux";
 
 const Cart = () => {
   const navigate = useNavigation();
+  const dispatch = useDispatch()
+
+  const { cartItems } = useSelector( (state) => state.cart )
 
   const incrementHandler = (id, name, price, image, stock, quantity) => {
     const newQty = quantity + 1;
