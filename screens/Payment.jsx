@@ -7,7 +7,7 @@ import { Button, RadioButton } from "react-native-paper";
 import { useDispatch, useSelector } from "react-redux";
 import { placeOrder } from "../redux/actions/otherActions";
 import { useMessageAndErrorOther } from "../utils/hooks";
-// import { useStripe } from "@stripe/stripe-react-native";
+import { useStripe } from "@stripe/stripe-react-native";
 import { Toast } from "react-native-toast-message/lib/src/Toast";
 import axios from "axios";
 import { server } from "../redux/store";
@@ -18,7 +18,7 @@ const Payment = ({ navigation, route }) => {
   const [loaderLoading, setLoaderLoading] = useState(false);
 
   const dispatch = useDispatch();
-  // const stripe = useStripe();
+  const stripe = useStripe();
 
   const { isAuthenticated, user } = useSelector((state) => state.user);
   const { cartItems } = useSelector((state) => state.cart);
@@ -93,6 +93,7 @@ const Payment = ({ navigation, route }) => {
         codHandler({ id: paymentIntent.id, status: paymentIntent.status });
       }
     } catch (error) {
+      console.log(error)
       return Toast.show({
         type: "error",
         text1: "Some Error",

@@ -12,6 +12,7 @@
     "@react-navigation/native": "^6.1.12",
     "@react-navigation/native-stack": "^6.9.20",
     "@reduxjs/toolkit": "^2.2.1",
+    "@stripe/stripe-react-native": "^0.37.1",
     "axios": "^1.6.8",
     "expo": "~50.0.7",
     "expo-camera": "^14.1.1",
