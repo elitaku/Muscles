@@ -100,3 +100,29 @@ export const useSetCategories = (setCategories, isFocused) => {
 
   }, [isFocused])
 }
+
+export const useGetOrders = (isFocused, isAdmin = false) => {
+  const [orders, setOrders] = useState([]);
+  const [loading, setLoading] = useState(false);
+  useEffect(() => {
+    setLoading(true);
+    axios
+      .get(`${server}/order/${isAdmin ? "admin" : "my"}`)
+      .then((res) => {
+        setOrders(res.data.orders);
+        setLoading(false);
+      })
+      .catch((e) => {
+        Toast.show({
+          type: "error",
+          text1: e.response.data.message,
+        });
+        setLoading(false);
+      });
+  }, [isFocused]);
+
+  return {
+    loading,
+    orders,
+  };
+};
