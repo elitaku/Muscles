@@ -1,7 +1,7 @@
 import { server } from "../store"
 import axios from "axios"
 
-export const getAllProducts = () => async (dispatch) => {
+export const getAllProducts = (keyword, category) => async (dispatch) => {
     
     try {
         dispatch({
@@ -10,11 +10,12 @@ export const getAllProducts = () => async (dispatch) => {
 
         // Axios request
 
-        const { data } = await axios.get(`${server}/product/all`,
+        const { data } = await axios
+            .get(`${server}/product/all?keyword=${keyword}&category=${category}`,
         
-        {
-            wuthCredentials: true
-        })
+            {
+                wuthCredentials: true
+            })
 
         dispatch({
             type: "getAllProductsSuccess",
