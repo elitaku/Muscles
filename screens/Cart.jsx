@@ -1,19 +1,19 @@
 import { View, Text, TouchableOpacity, ScrollView } from "react-native";
 import React from "react";
-import { defaultStyle } from "../styles/styles";
+import { colors, defaultStyle } from "../styles/styles";
 import Header from "../components/Header";
 import Heading from "../components/Heading";
 import { Button } from "react-native-paper";
-import { colors } from "../styles/styles";
 import CartItem from "../components/CartItem";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
+import { Toast } from "react-native-toast-message/lib/src/Toast";
 
 const Cart = () => {
   const navigate = useNavigation();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
-  const { cartItems } = useSelector( (state) => state.cart )
+  const { cartItems } = useSelector((state) => state.cart);
 
   const incrementHandler = (id, name, price, image, stock, quantity) => {
     const newQty = quantity + 1;
@@ -22,14 +22,36 @@ const Cart = () => {
         type: "error",
         text1: "Maximum value added",
       });
+    dispatch({
+      type: "addToCart",
+      payload: {
+        product: id,
+        name,
+        price,
+        image,
+        stock,
+        quantity: newQty,
+      },
+    });
   };
 
   const decrementHandler = (id, name, price, image, stock, quantity) => {
     const newQty = quantity - 1;
 
-    if (1 >= quantity) return;
-  };
+    if (1 >= quantity) return dispatch({ type: "removeFromCart", payload: id });
 
+    dispatch({
+      type: "addToCart",
+      payload: {
+        product: id,
+        name,
+        price,
+        image,
+        stock,
+        quantity: newQty,
+      },
+    });
+  };
   return (
     <View
       style={{
@@ -85,8 +107,14 @@ const Cart = () => {
           paddingHorizontal: 35,
         }}
       >
-        <Text>5 Items</Text>
-        <Text>₹124</Text>
+        <Text>{cartItems.length} Items</Text>
+        <Text>
+          ₹
+          {cartItems.reduce(
+            (prev, curr) => prev + curr.quantity * curr.price,
+            0
+          )}
+        </Text>
       </View>
 
       <TouchableOpacity
