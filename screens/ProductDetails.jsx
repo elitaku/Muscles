@@ -6,12 +6,15 @@ import {
   Image,
   TouchableOpacity,
 } from "react-native";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { defaultStyle, colors } from "../styles/styles";
 import Header from "../components/Header";
 import Carousel from "react-native-snap-carousel";
 import { Avatar, Button } from "react-native-paper";
 import Toast from "react-native-toast-message";
+import { useDispatch, useSelector } from "react-redux";
+import { useIsFocused } from "@react-navigation/native";
+import { getProductDetails } from "../redux/actions/productActions";
 
 const SLIDER_WIDTH = Dimensions.get("window").width;
 const ITEM_WIDTH = SLIDER_WIDTH;
@@ -26,13 +29,18 @@ export const iconOptions = {
 };
 
 const ProductDetails = ({ route: { params } }) => {
-  console.log(params.id);
 
-  const name = "Dumbbell";
-  const price = 3409;
-  const stock = 5;
-  const description =
-    "A dumbbell is a type of weight training equipment consisting of a short bar with weights attached at each end. It is commonly used in strength training exercises to target specific muscle groups by lifting and lowering the weights in various motions. Dumbbells are versatile tools for building muscle strength, improving endurance, and enhancing overall fitness.";
+  const dispatch = useDispatch()
+  const isFocused = useIsFocused()
+
+  const {product:{
+    name,
+    price,
+    stock,
+    description,
+    images
+  }} = useSelector((state) => state.product)
+
   const isCarousel = useRef(null);
   const [quantity, setQuantity] = useState(1);
 
@@ -62,16 +70,10 @@ const ProductDetails = ({ route: { params } }) => {
     });
   };
 
-  const images = [
-    {
-      id: "bbbgdfbnsdb",
-      url: "https://pngimg.com/d/dumbbell_PNG102651.png",
-    },
-    {
-      id: "bbbgdffdbnsdb",
-      url: "https://pngimg.com/d/dumbbell_PNG102651.png",
-    },
-  ];
+  useEffect(() => {
+    dispatch(getProductDetails(params.id))
+  }, [dispatch, params.id, isFocused])
+
   return (
     <View
       style={{
