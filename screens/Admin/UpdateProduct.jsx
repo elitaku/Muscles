@@ -2,207 +2,175 @@ import { View, Text, ScrollView } from "react-native";
 import React, { useEffect, useState } from "react";
 import Header from "../../components/Header";
 import {
-    colors,
-    defaultStyle,
-    formHeading,
-    inputOptions,
-    inputStyling,
+  colors,
+  defaultStyle,
+  formHeading,
+  inputOptions,
+  inputStyling,
 } from "../../styles/styles";
 import Loader from "../../components/Loader";
 import { Button, TextInput } from "react-native-paper";
 import SelectComponent from "../../components/SelectComponent";
-// import { useMessageAndErrorOther, useSetCategories } from "../../utils/hooks";
-// import { useIsFocused } from "@react-navigation/native";
-// import { useDispatch, useSelector } from "react-redux";
-// import { getProductDetails } from "../../redux/actions/productAction";
-// import { updateProduct } from "../../redux/actions/otherAction";
+import { useMessageAndErrorOther, useSetCategories } from "../../utils/hooks";
+import { useIsFocused } from "@react-navigation/native";
+import { useDispatch, useSelector } from "react-redux";
+import { getProductDetails } from "../../redux/actions/productActions";
+import { updateProduct } from "../../redux/actions/otherActions";
 
 const UpdateProduct = ({ navigation, route }) => {
-    // const isFocused = useIsFocused();
-    // const dispatch = useDispatch();
-    const [visible, setVisible] = useState(false);
+  const isFocused = useIsFocused();
+  const dispatch = useDispatch();
+  const [visible, setVisible] = useState(false);
 
-    const images = [
-        {
-            url: "https://pngimg.com/d/dumbbell_PNG102651.png",
-            _id: "nrbdfgd"
-        },
-        {
-            url: "https://pngimg.com/d/dumbbell_PNG102651.png",
-            _id: "sdfsdfsd"
-        },
-        {
-            url: "https://pngimg.com/d/dumbbell_PNG102651.png",
-            _id: "dfshth"
-        },
-        {
-            url: "https://pngimg.com/d/dumbbell_PNG102651.png",
-            _id: "dfgdfgrftj"
-        },
-    ];
-    
-    // const { product, loading } = useSelector((state) => state.product);
+  const { product, loading } = useSelector((state) => state.product);
 
-    const [id] = useState(route.params.id);
-    const [name, setName] = useState("");
-    const [description, setDescription] = useState("");
-    const [price, setPrice] = useState("");
-    const [stock, setStock] = useState("");
-    const [category, setCategory] = useState("Laptop");
-    const [categoryID, setCategoryID] = useState("");
-    const [categories, setCategories] = useState([
-        {
-            category: "Laptop", _id: "fsdfsdf"
-        },
-        {
-            category: "Cellphone", _id: "gdhfhjh"
-        },
-        {
-            category: "Tablet", _id: "ioerq"
-        },
-    ]);
-    
-    // useSetCategories(setCategories, isFocused);
+  const [id] = useState(route.params.id);
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [price, setPrice] = useState("");
+  const [stock, setStock] = useState("");
+  const [category, setCategory] = useState("");
+  const [categoryID, setCategoryID] = useState("");
+  const [categories, setCategories] = useState([]);
 
-    const submitHandler = () => {
-        // dispatch(updateProduct(id, name, description, price, stock, categoryID));
-        console.log(name, price, stock, categoryID);
-    };
+  useSetCategories(setCategories, isFocused);
 
-    // const loadingOther = useMessageAndErrorOther(
-    //     dispatch,
-    //     navigation,
-    //     "adminpanel"
-    // );
-    const loadingOther = false;
-    const loading = false;
+  const submitHandler = () => {
+    dispatch(updateProduct(id, name, description, price, stock, categoryID));
+  };
 
-    // useEffect(() => {
-    //     dispatch(getProductDetails(id));
-    // }, [dispatch, id, isFocused]);
+  const loadingOther = useMessageAndErrorOther(
+    dispatch,
+    navigation,
+    "adminpanel"
+  );
 
-    // useEffect(() => {
-    //     if (product) {
-    //         setName(product.name);
-    //         setDescription(product.description);
-    //         setPrice(String(product.price));
-    //         setStock(String(product.stock));
-    //         setCategory(product.category?.category);
-    //         setCategoryID(product.category?._id);
-    //     }
-    // }, [product]);
+  useEffect(() => {
+    dispatch(getProductDetails(id));
+  }, [dispatch, id, isFocused]);
 
-    return (
-        <>
+  useEffect(() => {
+    if (product) {
+      setName(product.name);
+      setDescription(product.description);
+      setPrice(String(product.price));
+      setStock(String(product.stock));
+      setCategory(product.category?.category);
+      setCategoryID(product.category?._id);
+    }
+  }, [product]);
+
+  return (
+    <>
+      <View
+        style={{
+          ...defaultStyle,
+          backgroundColor: colors.color5,
+        }}
+      >
+        <Header back={true} />
+
+        {/* Heading */}
+        <View style={{ marginBottom: 20, paddingTop: 70 }}>
+          <Text style={formHeading}>Update Product</Text>
+        </View>
+
+        {loading ? (
+          <Loader />
+        ) : (
+          <ScrollView
+            style={{
+              padding: 20,
+              elevation: 10,
+              borderRadius: 10,
+              backgroundColor: colors.color3,
+            }}
+          >
             <View
-                style={{
-                    ...defaultStyle,
-                    backgroundColor: colors.color5,
-                }}
+              style={{
+                justifyContent: "center",
+                height: 650,
+              }}
             >
-                <Header back={true} />
+              <Button
+                onPress={() =>
+                  navigation.navigate("productimages", {
+                    id,
+                    images: product.images,
+                  })
+                }
+                textColor={colors.color1}
+              >
+                Manage Images
+              </Button>
 
-                {/* Heading */}
-                <View style={{ marginBottom: 20, paddingTop: 70 }}>
-                    <Text style={formHeading}>Update Product</Text>
-                </View>
+              <TextInput
+                {...inputOptions}
+                placeholder="Name"
+                value={name}
+                onChangeText={setName}
+              />
+              <TextInput
+                {...inputOptions}
+                placeholder="Description"
+                value={description}
+                onChangeText={setDescription}
+              />
 
-                {loading ? (
-                    <Loader />
-                ) : (
-                    <ScrollView
-                        style={{
-                            padding: 20,
-                            elevation: 10,
-                            borderRadius: 10,
-                            backgroundColor: colors.color3,
-                        }}
-                    >
-                        <View
-                            style={{
-                                justifyContent: "center",
-                                height: 650,
-                            }}
-                        >
-                            <Button
-                                onPress={() =>
-                                    navigation.navigate("productimages", {
-                                        id,
-                                        images: images,
-                                    })
-                                }
-                                textColor={colors.color1}
-                            >
-                                Manage Images
-                            </Button>
+              <TextInput
+                {...inputOptions}
+                placeholder="Price"
+                keyboardType="number-pad"
+                value={price}
+                onChangeText={setPrice}
+              />
+              <TextInput
+                {...inputOptions}
+                placeholder="Stock"
+                value={stock}
+                keyboardType="number-pad"
+                onChangeText={setStock}
+              />
 
-                            <TextInput
-                                {...inputOptions}
-                                placeholder="Name"
-                                value={name}
-                                onChangeText={setName}
-                            />
-                            <TextInput
-                                {...inputOptions}
-                                placeholder="Description"
-                                value={description}
-                                onChangeText={setDescription}
-                            />
+              <Text
+                style={{
+                  ...inputStyling,
+                  textAlign: "center",
+                  textAlignVertical: "center",
+                  borderRadius: 3,
+                }}
+                onPress={() => setVisible(true)}
+              >
+                {category}
+              </Text>
 
-                            <TextInput
-                                {...inputOptions}
-                                placeholder="Price"
-                                keyboardType="number-pad"
-                                value={price}
-                                onChangeText={setPrice}
-                            />
-                            <TextInput
-                                {...inputOptions}
-                                placeholder="Stock"
-                                value={stock}
-                                keyboardType="number-pad"
-                                onChangeText={setStock}
-                            />
-
-                            <Text
-                                style={{
-                                    ...inputStyling,
-                                    textAlign: "center",
-                                    textAlignVertical: "center",
-                                    borderRadius: 3,
-                                }}
-                                onPress={() => setVisible(true)}
-                            >
-                                {category}
-                            </Text>
-
-                            <Button
-                                textColor={colors.color2}
-                                style={{
-                                    backgroundColor: colors.color1,
-                                    margin: 20,
-                                    padding: 6,
-                                }}
-                                onPress={submitHandler}
-                                loading={loadingOther}
-                                disabled={loadingOther}
-                            >
-                                Update
-                            </Button>
-                        </View>
-                    </ScrollView>
-                )}
+              <Button
+                textColor={colors.color2}
+                style={{
+                  backgroundColor: colors.color1,
+                  margin: 20,
+                  padding: 6,
+                }}
+                onPress={submitHandler}
+                loading={loadingOther}
+                disabled={loadingOther}
+              >
+                Update
+              </Button>
             </View>
+          </ScrollView>
+        )}
+      </View>
 
-            <SelectComponent
-                categories={categories}
-                setCategoryID={setCategoryID}
-                setCategory={setCategory}
-                visible={visible}
-                setVisible={setVisible}
-            />
-        </>
-    );
+      <SelectComponent
+        categories={categories}
+        setCategoryID={setCategoryID}
+        setCategory={setCategory}
+        visible={visible}
+        setVisible={setVisible}
+      />
+    </>
+  );
 };
 
 export default UpdateProduct;
