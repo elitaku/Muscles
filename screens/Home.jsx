@@ -1,5 +1,5 @@
 import { View, Text, TouchableOpacity, ScrollView } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { defaultStyle, colors } from "../styles/styles";
 import Header from "../components/Header";
 import { Avatar, Button } from "react-native-paper";
@@ -10,6 +10,8 @@ import Footer from "../components/Footer";
 import Heading from "../components/Heading";
 /* import { Toast } from "react-native-paper"; */
 import Toast from 'react-native-toast-message';
+import { useDispatch, useSelector } from "react-redux";
+import { getAllProducts } from "../redux/actions/productActions";
 
 const categories = [
   { category: "Nice", _id: "whfqwhv" },
@@ -24,58 +26,58 @@ const categories = [
   { category: "Nice10", _id: "whfqwhqwhtrdvseg" },
 ];
 
-export const products = [
-  {
-    price: 123312,
-    stock: 23,
-    name: "Sample",
-    _id: "efbhwuebef",
-    category: "Harry Potter",
-    images: [
-      {
-        url: "https://pngimg.com/d/dumbbell_PNG102651.png",
-      },
-    ],
-  },
+// export const products = [
+//   {
+//     price: 123312,
+//     stock: 23,
+//     name: "Sample",
+//     _id: "efbhwuebef",
+//     category: "Harry Potter",
+//     images: [
+//       {
+//         url: "https://pngimg.com/d/dumbbell_PNG102651.png",
+//       },
+//     ],
+//   },
 
-  {
-    price: 123312,
-    stock: 23,
-    name: "Sample2",
-    _id: "efbhwewweuebef",
-    category: "Laptop",
-    images: [
-      {
-        url: "https://setgis.net/images/spongebob_meme.png",
-      },
-    ],
-  },
-  {
-    price: 36546,
-    stock: 23,
-    name: "Sample",
-    _id: "efbhwfsfduebef",
-    category: "whfqgfdfgwhv",
-    images: [
-      {
-        url: "https://th.bing.com/th/id/R.a59546bf83f141e18a3181d761d5ca02?rik=TdNF5TC55Xk0JA&riu=http%3a%2f%2fpngimg.com%2fuploads%2fshrek%2fshrek_PNG16.png&ehk=g%2fTbGNEQI%2fiwTHqNIA5k2AauC9JH23hGvuqAYQKxdzM%3d&risl=&pid=ImgRaw&r=0",
-      },
-    ],
-  },
+//   {
+//     price: 123312,
+//     stock: 23,
+//     name: "Sample2",
+//     _id: "efbhwewweuebef",
+//     category: "Laptop",
+//     images: [
+//       {
+//         url: "https://setgis.net/images/spongebob_meme.png",
+//       },
+//     ],
+//   },
+//   {
+//     price: 36546,
+//     stock: 23,
+//     name: "Sample",
+//     _id: "efbhwfsfduebef",
+//     category: "whfqgfdfgwhv",
+//     images: [
+//       {
+//         url: "https://th.bing.com/th/id/R.a59546bf83f141e18a3181d761d5ca02?rik=TdNF5TC55Xk0JA&riu=http%3a%2f%2fpngimg.com%2fuploads%2fshrek%2fshrek_PNG16.png&ehk=g%2fTbGNEQI%2fiwTHqNIA5k2AauC9JH23hGvuqAYQKxdzM%3d&risl=&pid=ImgRaw&r=0",
+//       },
+//     ],
+//   },
 
-  {
-    price: 67567,
-    stock: 23,
-    name: "Sample2",
-    _id: "retw4t45y",
-    category: "whfqdfgdfwhvee",
-    images: [
-      {
-        url: "https://animedork.com/wp-content/uploads/2022/11/Mash-Burnedead.png",
-      },
-    ],
-  },
-];
+//   {
+//     price: 67567,
+//     stock: 23,
+//     name: "Sample2",
+//     _id: "retw4t45y",
+//     category: "whfqdfgdfwhvee",
+//     images: [
+//       {
+//         url: "https://animedork.com/wp-content/uploads/2022/11/Mash-Burnedead.png",
+//       },
+//     ],
+//   },
+// ];
 
 const Home = () => {
   const [category, setCategory] = useState("");
@@ -83,6 +85,9 @@ const Home = () => {
   const [searchQuery, setSearchQuery] = useState("");
 
   const navigate = useNavigation();
+  const dispatch = useDispatch();
+
+  const { products } = useSelector((state) => state.product)
 
   const categoryButtonHandler = (id) => {
     setCategory(id);
@@ -99,6 +104,10 @@ const Home = () => {
       text1: "Added To Cart",
     });
   };
+
+  useEffect(() => {
+    dispatch(getAllProducts())
+  }, [dispatch])
 
   return (
     <>
