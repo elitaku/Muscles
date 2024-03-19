@@ -147,12 +147,12 @@ const Payment = ({ navigation, route }) => {
             ? redirectToLogin
             : paymentMethod === "COD"
             ? () => codHandler()
-            : onlineHandler
+            : () => onlineHandler()
         }
       >
         <Button
           loading={loading}
-          // disabled={loading}
+          disabled={loading}
           style={styles.btn}
           textColor={colors.color2}
           icon={
