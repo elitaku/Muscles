@@ -26,6 +26,7 @@ const Payment = ({ navigation, route }) => {
   const redirectToLogin = () => {
     navigation.navigate("login");
   };
+
   const codHandler = (paymentInfo) => {
     const shippingInfo = {
       address: user.address,
@@ -151,7 +152,7 @@ const Payment = ({ navigation, route }) => {
       >
         <Button
           loading={loading}
-          disabled={loading}
+          // disabled={loading}
           style={styles.btn}
           textColor={colors.color2}
           icon={

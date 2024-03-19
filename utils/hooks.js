@@ -75,7 +75,7 @@ export const useMessageAndErrorOther = (
 
       func && dispatch(func());
     }
-  }, [error, message, dispatch]);
+  }, [error, message, dispatch, navigateTo, func]);
 
   return loading;
 };
