@@ -7,6 +7,9 @@ import ButtonBox from "../../components/ButtonBox";
 import ProductListHeading from "../../components/ProductListHeading";
 import ProductListItem from "../../components/ProductListItem";
 import Chart from "../../components/Chart";
+import ProductSalesChart from "../../components/ProductSalesChart";
+import MonthlySalesChart from "../../components/MonthlySalesChart";
+import UserSalesChart from "../../components/UserSalesChart";
 import { useAdminProducts, useMessageAndErrorOther } from "../../utils/hooks";
 import { useDispatch } from "react-redux";
 import { useIsFocused } from "@react-navigation/native";
@@ -63,16 +66,57 @@ const AdminPanel = ({ navigation }) => {
         <Loader />
       ) : (
         <>
-          <View
-            style={{
-              backgroundColor: colors.color3,
-              borderRadius: 20,
-              alignItems: "center",
-            }}
+          <ScrollView 
+            horizontal={true}
+            showsHorizontalScrollIndicator={false}
           >
-            <Chart inStock={inStock} outOfStock={outOfStock} />
-          </View>
+            <View
+              style={{
+                backgroundColor: colors.color3,
+                borderRadius: 20,
+                alignItems: "center",
+                marginBottom: 250,
+                marginRight: 10,
+              }}
+            >
+              <Chart inStock={inStock} outOfStock={outOfStock} />
+            </View>
 
+            <View
+              style={{
+                backgroundColor: colors.color3,
+                borderRadius: 20,
+                alignItems: "center",
+                marginBottom: 250,
+                marginRight: 10,
+              }}
+            >
+              <ProductSalesChart inStock={inStock} outOfStock={outOfStock} />
+            </View>
+
+            <View
+              style={{
+                backgroundColor: colors.color3,
+                borderRadius: 20,
+                alignItems: "center",
+                marginBottom: 500,
+              }}
+            >
+              <UserSalesChart inStock={inStock} outOfStock={outOfStock} />
+            </View>
+
+            <View
+              style={{
+                backgroundColor: colors.color3,
+                borderRadius: 20,
+                alignItems: "center",
+                marginBottom: 500,
+              }}
+            >
+              <MonthlySalesChart inStock={inStock} outOfStock={outOfStock} />
+            </View>
+          </ScrollView>
+          
           <View>
             <View
               style={{
@@ -122,6 +166,7 @@ const AdminPanel = ({ navigation }) => {
                 ))}
             </View>
           </ScrollView>
+
         </>
       )}
     </View>

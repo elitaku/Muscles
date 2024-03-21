@@ -5,7 +5,7 @@ import { colors } from "../styles/styles";
 
 const screenWidth = Dimensions.get("screen").width - 20 - 75;
 
-const Chart = ({ inStock = 0, outOfStock = 0 }) => {
+const ProductSalesChart = ({ inStock = 0, outOfStock = 0 }) => {
     const data = [
         {
             name: "Out of Stock",
@@ -26,7 +26,7 @@ const Chart = ({ inStock = 0, outOfStock = 0 }) => {
     };
 
     return (
-        <View >
+        <View>
             <PieChart
                 data={data}
                 width={screenWidth}
@@ -40,4 +40,4 @@ const Chart = ({ inStock = 0, outOfStock = 0 }) => {
     );
 };
 
-export default Chart;
+export default ProductSalesChart;
