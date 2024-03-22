@@ -5,6 +5,7 @@ import {
   StyleSheet,
   Image,
   TouchableOpacity,
+  FlatList, // Import FlatList
 } from "react-native";
 import React, { useEffect, useRef, useState } from "react";
 import { defaultStyle, colors } from "../styles/styles";
@@ -14,7 +15,7 @@ import { Avatar, Button } from "react-native-paper";
 import Toast from "react-native-toast-message";
 import { useDispatch, useSelector } from "react-redux";
 import { useIsFocused } from "@react-navigation/native";
-import { getProductDetails } from "../redux/actions/productActions";
+import { getProductDetails, getAllReviews } from "../redux/actions/productActions";
 
 const SLIDER_WIDTH = Dimensions.get("window").width;
 const ITEM_WIDTH = SLIDER_WIDTH;
@@ -33,13 +34,7 @@ const ProductDetails = ({ route: { params } }) => {
   const dispatch = useDispatch()
   const isFocused = useIsFocused()
 
-  const {product:{
-    name,
-    price,
-    stock,
-    description,
-    images
-  }} = useSelector((state) => state.product)
+  const { product: { name, price, stock, description, images }, reviews } = useSelector((state) => state.product) // Include reviews state here
 
   const isCarousel = useRef(null);
   const [quantity, setQuantity] = useState(1);
@@ -67,13 +62,12 @@ const ProductDetails = ({ route: { params } }) => {
     dispatch({
       type: "addToCart",
       payload: {
-        product:
-          params.id,
-          name,
-          price,
-          image: images[0]?.url,
-          stock,
-          quantity,
+        product: params.id,
+        name,
+        price,
+        image: images[0]?.url,
+        stock,
+        quantity,
       }
     })
     
@@ -84,8 +78,9 @@ const ProductDetails = ({ route: { params } }) => {
   };
 
   useEffect(() => {
-    dispatch(getProductDetails(params.id))
-  }, [dispatch, params.id, isFocused])
+    dispatch(getProductDetails(params.id));
+    dispatch(getAllReviews(params.id)); // Fetch reviews when component mounts
+  }, [dispatch, params.id, isFocused]);
 
   return (
     <View
@@ -144,6 +139,20 @@ const ProductDetails = ({ route: { params } }) => {
         >
           {description}
         </Text>
+
+        {/* Render reviews */}
+        <FlatList
+  data={reviews}
+  renderItem={({ item }) => (
+    <View style={{ marginBottom: 10 }}>
+      <Text style={{ fontWeight: 'bold' }}>{item.userId}</Text>
+      <Text>Rating: {item.rating}</Text>
+      <Text>{item.review}</Text>
+    </View>
+  )}
+  keyExtractor={(item, index) => index.toString()}
+/>
+
 
         <View
           style={{
