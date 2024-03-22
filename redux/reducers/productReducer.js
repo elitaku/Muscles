@@ -3,7 +3,9 @@ import { createReducer } from "@reduxjs/toolkit";
 export const productReducer = createReducer({
     products: [],
     product: {},
-    reviews: [], // Adding reviews state
+    comments: [], // Adding reviews state
+    comment: {}, // Adding reviews state
+
 }, (builder) => {
     builder
         .addCase("getAllProductsRequest", (state) => {
@@ -35,7 +37,7 @@ export const productReducer = createReducer({
         })
         .addCase("getAllReviewsSuccess", (state, action) => { // Adding case for successful reviews fetch
             state.loading = false;
-            state.reviews = action.payload;
+            state.comment = action.payload;
         })
 
         .addCase("getAllProductsFail", (state, action) => {

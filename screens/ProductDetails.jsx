@@ -5,7 +5,7 @@ import {
   StyleSheet,
   Image,
   TouchableOpacity,
-  FlatList, // Import FlatList
+  FlatList,
 } from "react-native";
 import React, { useEffect, useRef, useState } from "react";
 import { defaultStyle, colors } from "../styles/styles";
@@ -15,50 +15,51 @@ import { Avatar, Button } from "react-native-paper";
 import Toast from "react-native-toast-message";
 import { useDispatch, useSelector } from "react-redux";
 import { useIsFocused } from "@react-navigation/native";
-import { getProductDetails, getAllReviews } from "../redux/actions/productActions";
+import {
+  getProductDetails,
+  getAllReviews,
+} from "../redux/actions/productActions";
+import { server } from "../redux/store";
 
 const SLIDER_WIDTH = Dimensions.get("window").width;
 const ITEM_WIDTH = SLIDER_WIDTH;
-export const iconOptions = {
-  size: 20,
-  style: {
-    borderRadius: 5,
-    backgroundColor: colors.color5,
-    height: 25,
-    width: 25,
-  },
-};
 
 const ProductDetails = ({ route: { params } }) => {
+  const dispatch = useDispatch();
+  const isFocused = useIsFocused();
 
-  const dispatch = useDispatch()
-  const isFocused = useIsFocused()
+  const {
+    product: { name, price, stock, description, images },
+  } = useSelector((state) => state.product);
 
-  const { product: { name, price, stock, description, images }, reviews } = useSelector((state) => state.product) // Include reviews state here
+  const [comments, setComments] = useState([]);
 
   const isCarousel = useRef(null);
   const [quantity, setQuantity] = useState(1);
 
   const incrementQty = () => {
-    if (stock <= quantity)
+    if (stock <= quantity) {
       return Toast.show({
         type: "error",
         text1: "Maximum Value Added",
       });
+    }
     setQuantity((prev) => prev + 1);
   };
+
   const decrementQty = () => {
     if (quantity <= 1) return;
     setQuantity((prev) => prev - 1);
   };
 
   const addToCardHandler = () => {
-    if (stock === 0)
+    if (stock === 0) {
       return Toast.show({
         type: "error",
         text1: "Out Of Stock",
       });
-    
+    }
+
     dispatch({
       type: "addToCart",
       payload: {
@@ -68,9 +69,9 @@ const ProductDetails = ({ route: { params } }) => {
         image: images[0]?.url,
         stock,
         quantity,
-      }
-    })
-    
+      },
+    });
+
     Toast.show({
       type: "success",
       text1: "Added To Cart",
@@ -78,21 +79,28 @@ const ProductDetails = ({ route: { params } }) => {
   };
 
   useEffect(() => {
+    const fetchComments = async () => {
+      try {
+        const response = await fetch(`${server}/comment/all/${params.id}`);
+        const data = await response.json();
+        setComments(data);
+        console.log(data);
+      } catch (error) {
+        console.error("Error fetching comments:", error);
+      }
+    };
+    fetchComments();
+  }, [params.id, isFocused]);
+
+  useEffect(() => {
     dispatch(getProductDetails(params.id));
-    dispatch(getAllReviews(params.id)); // Fetch reviews when component mounts
   }, [dispatch, params.id, isFocused]);
 
   return (
     <View
-      style={{
-        ...defaultStyle,
-        padding: 0,
-        backgroundColor: colors.color1,
-      }}
+      style={{ ...defaultStyle, padding: 0, backgroundColor: colors.color1 }}
     >
       <Header back={true} />
-
-      {/* Carousel */}
       <Carousel
         layout="stack"
         sliderWidth={SLIDER_WIDTH}
@@ -111,48 +119,18 @@ const ProductDetails = ({ route: { params } }) => {
           borderTopRightRadius: 55,
         }}
       >
-        <Text
-          numberOfLines={2}
-          style={{
-            fontSize: 25,
-          }}
-        >
+        <Text numberOfLines={2} style={{ fontSize: 25 }}>
           {name}
         </Text>
-
+        <Text style={{ fontSize: 18, fontWeight: "900" }}>₹{price}</Text>
         <Text
-          style={{
-            fontSize: 18,
-            fontWeight: "900",
-          }}
-        >
-          ₹{price}
-        </Text>
-
-        <Text
-          style={{
-            letterSpacing: 1,
-            lineHeight: 20,
-            marginVertical: 15,
-          }}
+          style={{ letterSpacing: 1, lineHeight: 20, marginVertical: 15 }}
           numberOfLines={8}
         >
           {description}
         </Text>
 
         {/* Render reviews */}
-        <FlatList
-  data={reviews}
-  renderItem={({ item }) => (
-    <View style={{ marginBottom: 10 }}>
-      <Text style={{ fontWeight: 'bold' }}>{item.userId}</Text>
-      <Text>Rating: {item.rating}</Text>
-      <Text>{item.review}</Text>
-    </View>
-  )}
-  keyExtractor={(item, index) => index.toString()}
-/>
-
 
         <View
           style={{
@@ -162,15 +140,9 @@ const ProductDetails = ({ route: { params } }) => {
             paddingHorizontal: 5,
           }}
         >
-          <Text
-            style={{
-              color: colors.color3,
-              fontWeight: "100",
-            }}
-          >
+          <Text style={{ color: colors.color3, fontWeight: "100" }}>
             Quantity
           </Text>
-
           <View
             style={{
               width: 80,
@@ -180,13 +152,29 @@ const ProductDetails = ({ route: { params } }) => {
             }}
           >
             <TouchableOpacity onPress={decrementQty}>
-              <Avatar.Icon icon={"minus"} {...iconOptions} />
+              <Avatar.Icon
+                icon={"minus"}
+                size={20}
+                style={{
+                  borderRadius: 5,
+                  backgroundColor: colors.color5,
+                  height: 25,
+                  width: 25,
+                }}
+              />
             </TouchableOpacity>
-
             <Text style={style.quantity}>{quantity}</Text>
-
             <TouchableOpacity onPress={incrementQty}>
-              <Avatar.Icon icon={"plus"} {...iconOptions} />
+              <Avatar.Icon
+                icon={"plus"}
+                size={20}
+                style={{
+                  borderRadius: 5,
+                  backgroundColor: colors.color5,
+                  height: 25,
+                  width: 25,
+                }}
+              />
             </TouchableOpacity>
           </View>
         </View>
@@ -196,6 +184,31 @@ const ProductDetails = ({ route: { params } }) => {
             Add To Cart
           </Button>
         </TouchableOpacity>
+
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "center",
+            marginBottom: 10,
+          }}
+        >
+          <Text style={{ fontSize: 20, fontWeight: "bold" }}>Comments</Text>
+          {/* Add any additional header elements here */}
+        </View>
+
+        {/* Render reviews */}
+        <FlatList
+          data={comments}
+          renderItem={({ item }) => (
+            <View style={{ marginBottom: 10, height: 100 }}>
+              <Text style={{ fontWeight: "bold" }}>{item.user}</Text>
+              <Text>Rating: {item.rating}</Text>
+              <Text>Comment {item.text}</Text>
+            </View>
+          )}
+          keyExtractor={(item, index) => index.toString()}
+        />
       </View>
     </View>
   );
@@ -229,7 +242,6 @@ const style = StyleSheet.create({
     borderRadius: 5,
     borderColor: colors.color5,
   },
-
   btn: {
     backgroundColor: colors.color3,
     borderRadius: 100,
