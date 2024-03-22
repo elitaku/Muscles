@@ -91,3 +91,29 @@ export const getProductDetails = (id) => async (dispatch) => {
     }
 
 }
+
+
+export const getAllReviews = (productId) => async (dispatch) => {
+    
+    try {
+        dispatch({
+            type: "getAllReviewsRequest",
+        });
+
+        const { data } = await axios.get(`${server}/comment/${productId}`, {
+            withCredentials: true
+        });
+
+        dispatch({
+            type: "getAllReviewsSuccess",
+            payload: data.reviews
+        });
+
+    } catch (error) {
+        
+        dispatch({
+            type: "getAllReviewsFail",
+            payload: error.response.data.message
+        });
+    }
+};

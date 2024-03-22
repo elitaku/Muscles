@@ -13,4 +13,4 @@ export const store = configureStore({
     },
 })
 
-export const server = "https://mooskles-server.onrender.com/api/v1"
+export const server = "https://mbackend-p19q.onrender.com/api/v1"
