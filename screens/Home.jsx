@@ -9,23 +9,22 @@ import { useIsFocused, useNavigation } from "@react-navigation/native";
 import Footer from "../components/Footer";
 import Heading from "../components/Heading";
 /* import { Toast } from "react-native-paper"; */
-import Toast from 'react-native-toast-message';
+import Toast from "react-native-toast-message";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllProducts } from "../redux/actions/productActions";
 import { useSetCategories } from "../utils/hooks";
-
 
 const Home = () => {
   const [category, setCategory] = useState("");
   const [activeSearch, setActiveSearch] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
-  const [categories, setCategories] = useState([])
+  const [categories, setCategories] = useState([]);
 
   const navigate = useNavigation();
   const dispatch = useDispatch();
-  const isFocused = useIsFocused()
+  const isFocused = useIsFocused();
 
-  const { products } = useSelector((state) => state.product)
+  const { products } = useSelector((state) => state.product);
 
   const categoryButtonHandler = (id) => {
     setCategory(id);
@@ -37,38 +36,35 @@ const Home = () => {
         type: "error",
         text1: "Out Of Stock",
       });
-    
+
     dispatch({
       type: "addToCart",
       payload: {
-        product:
-          id,
-          name,
-          price,
-          image,
-          stock,
-          quantity: 1,
-      }
-    })
-    
+        product: id,
+        name,
+        price,
+        image,
+        stock,
+        quantity: 1,
+      },
+    });
+
     Toast.show({
       type: "success",
       text1: "Added To Cart",
     });
   };
 
-  useSetCategories(setCategories, isFocused)
+  useSetCategories(setCategories, isFocused);
 
   useEffect(() => {
-    
     const timeOutId = setTimeout(() => {
-      dispatch(getAllProducts(searchQuery, category))
-    }, 200)
+      dispatch(getAllProducts(searchQuery, category));
+    }, 200);
     return () => {
-      clearTimeout(timeOutId)
-    }
-
-  }, [dispatch, searchQuery, category, isFocused])
+      clearTimeout(timeOutId);
+    };
+  }, [dispatch, searchQuery, category, isFocused]);
 
   return (
     <>

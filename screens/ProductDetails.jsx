@@ -1,25 +1,17 @@
-import {
-  View,
-  Text,
-  Dimensions,
-  StyleSheet,
-  Image,
-  TouchableOpacity,
-  FlatList,
-} from "react-native";
 import React, { useEffect, useRef, useState } from "react";
+import { View, Text, Dimensions, StyleSheet, Image, TouchableOpacity, FlatList, ScrollView } from "react-native";
 import { defaultStyle, colors } from "../styles/styles";
 import Header from "../components/Header";
+import Comment from "../components/Comment";
 import Carousel from "react-native-snap-carousel";
 import { Avatar, Button } from "react-native-paper";
 import Toast from "react-native-toast-message";
 import { useDispatch, useSelector } from "react-redux";
 import { useIsFocused } from "@react-navigation/native";
-import {
-  getProductDetails,
-  getAllReviews,
-} from "../redux/actions/productActions";
+import { getProductDetails } from "../redux/actions/productActions";
 import { server } from "../redux/store";
+import { AirbnbRating } from "react-native-ratings";
+import { Table, Row, Rows, Cell } from "react-native-table-component";
 
 const SLIDER_WIDTH = Dimensions.get("window").width;
 const ITEM_WIDTH = SLIDER_WIDTH;
@@ -97,9 +89,7 @@ const ProductDetails = ({ route: { params } }) => {
   }, [dispatch, params.id, isFocused]);
 
   return (
-    <View
-      style={{ ...defaultStyle, padding: 0, backgroundColor: colors.color1 }}
-    >
+    <ScrollView style={{ ...defaultStyle, padding: 0, backgroundColor: colors.color1 }}>
       <Header back={true} />
       <Carousel
         layout="stack"
@@ -113,8 +103,6 @@ const ProductDetails = ({ route: { params } }) => {
         style={{
           backgroundColor: colors.color2,
           padding: 35,
-          flex: 1,
-          marginTop: -380,
           borderTopLeftRadius: 55,
           borderTopRightRadius: 55,
         }}
@@ -185,12 +173,21 @@ const ProductDetails = ({ route: { params } }) => {
           </Button>
         </TouchableOpacity>
 
+        {/* Rating */}
+        <AirbnbRating
+          count={5}
+          reviews={["Terrible", "Meh", "Hmm...", "Very Good", "Jesus"]}
+          defaultRating={5}
+          size={30}
+        />
+
         <View
           style={{
             flexDirection: "row",
             justifyContent: "space-between",
             alignItems: "center",
-            marginBottom: 10,
+            marginBottom: 20,
+            marginTop: 20
           }}
         >
           <Text style={{ fontSize: 20, fontWeight: "bold" }}>Comments</Text>
@@ -210,7 +207,8 @@ const ProductDetails = ({ route: { params } }) => {
           keyExtractor={(item, index) => index.toString()}
         />
       </View>
-    </View>
+      <Comment />
+    </ScrollView>
   );
 };
 

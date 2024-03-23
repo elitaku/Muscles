@@ -20,7 +20,6 @@ export const productReducer = createReducer({
         .addCase("getAllReviewsRequest", (state) => { // Adding case for fetching reviews
             state.loading = true;
         })
-
         .addCase("getAllProductsSuccess", (state, action) => {
             state.loading = false;
             state.products = action.payload;

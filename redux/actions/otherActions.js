@@ -260,6 +260,31 @@ export const placeOrder =
       });
     }
   };
+
+  export const addComment = (formData) => async (dispatch) => {
+    try {
+      dispatch({
+        type: "addCommentRequest",
+      });
+  
+      const { data } = await axios.post(`${server}/comment/create`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+        withCredentials: true,
+      });
+  
+      dispatch({
+        type: "addCommentSuccess",
+        payload: data.message,
+      });
+    } catch (error) {
+      dispatch({
+        type: "addCommentFail",
+        payload: error.response.data.message,
+      });
+    }
+  };
   
   export const updateProduct =
     (id, name, description, price, stock, category) => async (dispatch) => {

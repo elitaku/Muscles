@@ -6,7 +6,7 @@ export const getAllProducts = (keyword, category) => async (dispatch) => {
     try {
         dispatch({
             type: "getAllProductsRequest",
-        })
+        });
 
         // Axios request
 
@@ -14,7 +14,7 @@ export const getAllProducts = (keyword, category) => async (dispatch) => {
             .get(`${server}/product/all?keyword=${keyword}&category=${category}`,
         
             {
-                wuthCredentials: true
+                withCredentials: true
             })
 
         dispatch({
@@ -44,7 +44,7 @@ export const getAdminProducts = () => async (dispatch) => {
         const { data } = await axios.get(`${server}/product/admin`,
         
         {
-            wuthCredentials: true
+            withCredentials: true
         })
 
         dispatch({
@@ -74,7 +74,7 @@ export const getProductDetails = (id) => async (dispatch) => {
         const { data } = await axios.get(`${server}/product/single/${id}`,
         
         {
-            wuthCredentials: true
+            withCredentials: true
         })
 
         dispatch({
