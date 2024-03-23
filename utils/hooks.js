@@ -84,7 +84,7 @@ export const useMessageAndErrorOther = (
 export const useSetCategories = (setCategories, isFocused) => {
   useEffect(() => {
     axios
-      .get(`${server}/product/categories`)
+      .get(`${server}/category/all`)
       .then((res) => {
         setCategories(res.data.categories);
       })
