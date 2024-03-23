@@ -81,7 +81,7 @@ export const loadUser = () => async (dispatch) => {
         const { data } = await axios.get(`${server}/user/me`,
         
         {
-            wuthCredentials: true
+            withCredentials: true
         })
 
         dispatch({
@@ -111,7 +111,7 @@ export const logout = () => async (dispatch) => {
         const { data } = await axios.get(`${server}/user/logout`,
         
         {
-            wuthCredentials: true
+            withCredentials: true
         })
 
         dispatch({

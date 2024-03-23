@@ -1,25 +1,21 @@
-import { View, Dimensions } from "react-native";
+import { View, Dimensions, Text } from "react-native";
 import React from "react";
 import { BarChart } from "react-native-chart-kit";
 import { colors } from "../styles/styles";
 
 const screenWidth = Dimensions.get("screen").width - 20 - 75;
 
-const UserSalesChart = ({ inStock = 0, outOfStock = 0 }) => {
-    const data = [
-        Math.random() * 100,
-        Math.random() * 100,
-        Math.random() * 100,
-        Math.random() * 100,
-        Math.random() * 100,
-        Math.random() * 100
-    ];
+const UserSalesChart = ({ data }) => {
+    const randomColor = () => {
+        const red = Math.floor(Math.random() * 256);
+        const green = Math.floor(Math.random() * 256);
+        const blue = Math.floor(Math.random() * 256);
+        return `rgba(${red}, ${green}, ${blue}, 1)`;
+    };
 
     const chartConfig = {
-        // backgroundGradientFrom: "#fb8c00",
-        // backgroundGradientTo: "#ffa726",
         decimalPlaces: 0, // optional, defaults to 2dp
-        color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+        color: (opacity = 1, index) => randomColor(),
         labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
         propsForDots: {
             r: "6",
@@ -28,22 +24,21 @@ const UserSalesChart = ({ inStock = 0, outOfStock = 0 }) => {
         }
     };
 
-    return (
-        <View >
-            {/* <PieChart
-                data={data}
-                width={screenWidth}
-                height={150}
-                chartConfig={chartConfig}
-                accessor={"population"}
-                backgroundColor={colors.color3}
-                absolute
-            /> */}
-            <BarChart
-                data={{
-                    labels: ["January", "February", "March", "April"],
+    // Check if data and data.ordersCountByProduct are defined and an array before trying to map over it
+    const transformedData = data && Array.isArray(data.ordersCountByProduct) ? data.ordersCountByProduct.map(item => item.totalAmount) : [];
+    const labels = data && Array.isArray(data.ordersCountByProduct) ? data.ordersCountByProduct.map(item => item._id) : [];
+    console.log(data)
+    if (!transformedData.length) {
+        return <Text>No orders to display</Text>;
+      }
+      
+      return (
+        <View>
+          <BarChart
+             data={{
+                    labels: labels,
                     datasets: [
-                        {data}
+                        {data: transformedData}
                     ]
                 }}
                 width={screenWidth}
@@ -56,7 +51,7 @@ const UserSalesChart = ({ inStock = 0, outOfStock = 0 }) => {
                 bezier
             />
         </View>
-    );
+      );
 };
 
 export default UserSalesChart;

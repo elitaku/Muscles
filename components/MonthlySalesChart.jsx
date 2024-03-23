@@ -1,62 +1,55 @@
-import { View, Dimensions } from "react-native";
+import { View, Dimensions, Text } from "react-native";
 import React from "react";
 import { LineChart } from "react-native-chart-kit";
 import { colors } from "../styles/styles";
 
 const screenWidth = Dimensions.get("screen").width - 20 - 75;
 
-const MonthlySalesChart = ({ inStock = 0, outOfStock = 0 }) => {
-    const data = [
-        Math.random() * 100,
-        Math.random() * 100,
-        Math.random() * 100,
-        Math.random() * 100,
-        Math.random() * 100,
-        Math.random() * 100
-    ];
+const getMonthName = (monthNumber) => {
+    const date = new Date(0);
+    date.setMonth(monthNumber);
+    return date.toLocaleString('default', { month: 'long' });
+  };
 
-    const chartConfig = {
-        // backgroundGradientFrom: "#fb8c00",
-        // backgroundGradientTo: "#ffa726",
-        decimalPlaces: 0, // optional, defaults to 2dp
-        color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-        labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-        propsForDots: {
-            r: "6",
-            strokeWidth: "2",
-            stroke: "#ffa726"
-        }
-    };
+const MonthlySalesChart = ({ data }) => {
+  const chartConfig = {
+    decimalPlaces: 0, // optional, defaults to 2dp
+    color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+    labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+    propsForDots: {
+      r: "6",
+      strokeWidth: "2",
+      stroke: colors.primary
+    }
+  };
 
-    return (
-        <View >
-            {/* <PieChart
-                data={data}
-                width={screenWidth}
-                height={150}
-                chartConfig={chartConfig}
-                accessor={"population"}
-                backgroundColor={colors.color3}
-                absolute
-            /> */}
-            <LineChart
-                data={{
-                    labels: ["January", "February", "March", "April"],
-                    datasets: [
-                        {data}
-                    ]
-                }}
-                width={screenWidth}
-                height={180}
-                yAxisLabel="$"
-                yAxisSuffix="k"
-                yAxisInterval={1} // optional, defaults to 1
-                chartConfig={chartConfig}
-                absolute
-                bezier
-            />
-        </View>
-    );
+  // Check if data and data.ordersCountByProduct are defined and an array before trying to map over it
+  const transformedData = data && Array.isArray(data.ordersSumByMonth) ? data.ordersSumByMonth.map(item => item.totalAmount) : [];
+  const labels = data && Array.isArray(data.ordersSumByMonth)
+    ? data.ordersSumByMonth.map(item => getMonthName(item._id - 1)) // Subtract 1 because month numbers start from 0 in JavaScript Date
+    : [];
+  
+  console.log(data)
+  if (!transformedData.length) {
+    return <Text>No orders to display</Text>;
+  }
+  
+  return (
+    <View>
+      <LineChart
+        data={{
+          labels: labels,
+          datasets: [
+            {data: transformedData}
+          ]
+        }}
+        width={screenWidth}
+        height={220}
+        chartConfig={chartConfig}
+        bezier
+      />
+    </View>
+  );
 };
 
 export default MonthlySalesChart;

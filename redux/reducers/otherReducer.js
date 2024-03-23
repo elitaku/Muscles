@@ -1,5 +1,14 @@
 import { createReducer } from "@reduxjs/toolkit"
 
+const initialState = {
+  chartData: [],
+  chartData2: [],
+  chartData3: [],
+  loading: false,
+  error: null,
+};
+
+
 export const otherReducer = createReducer({}, (builder) => {
     builder
         .addCase("updatePasswordRequest", (state) => {
@@ -155,6 +164,39 @@ export const otherReducer = createReducer({}, (builder) => {
           state.error = action.payload;
         })
         .addCase("resetPasswordFail", (state, action) => {
+          state.loading = false;
+          state.error = action.payload;
+        })
+        .addCase("fetchChart1DataRequest", (state) => {
+          state.loading = true
+        })
+        .addCase("fetchChart1DataSuccess", (state, action) => {
+          state.loading = false;
+          state.chartData = action.payload;
+        })
+        .addCase("fetchChart1DataFail", (state, action) => {
+          state.loading = false;
+          state.error = action.payload;
+        })
+        .addCase("fetchChart2DataRequest", (state) => {
+          state.loading = true
+        })
+        .addCase("fetchChart2DataSuccess", (state, action) => {
+          state.loading = false;
+          state.chartData2 = action.payload;
+        })
+        .addCase("fetchChart2DataFail", (state, action) => {
+          state.loading = false;
+          state.error = action.payload;
+        })
+        .addCase("fetchChart3DataRequest", (state) => {
+          state.loading = true
+        })
+        .addCase("fetchChart3DataSuccess", (state, action) => {
+          state.loading = false;
+          state.chartData3 = action.payload;
+        })
+        .addCase("fetchChart3DataFail", (state, action) => {
           state.loading = false;
           state.error = action.payload;
         });

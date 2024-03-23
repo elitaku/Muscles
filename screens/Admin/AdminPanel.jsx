@@ -10,7 +10,7 @@ import Chart from "../../components/Chart";
 import ProductSalesChart from "../../components/ProductSalesChart";
 import MonthlySalesChart from "../../components/MonthlySalesChart";
 import UserSalesChart from "../../components/UserSalesChart";
-import { useAdminProducts, useMessageAndErrorOther } from "../../utils/hooks";
+import { useAdminProducts, useMessageAndErrorOther,useChartData } from "../../utils/hooks";
 import { useDispatch } from "react-redux";
 import { useIsFocused } from "@react-navigation/native";
 import { deleteProduct } from "../../redux/actions/otherActions";
@@ -20,7 +20,9 @@ const AdminPanel = ({ navigation }) => {
   const dispatch = useDispatch();
   const isFocused = useIsFocused();
 
-  const { loading, products, inStock, outOfStock } = useAdminProducts(
+  const { chartData, chartData2, chartData3, loading, error } = useChartData(dispatch,isFocused);
+  console.log(chartData, chartData2, chartData3, loading, error);
+  const { products } = useAdminProducts(
     dispatch,
     isFocused
   );
@@ -79,7 +81,7 @@ const AdminPanel = ({ navigation }) => {
                 marginRight: 10,
               }}
             >
-              <Chart inStock={inStock} outOfStock={outOfStock} />
+              {/* <Chart inStock={inStock} outOfStock={outOfStock} /> */}
             </View>
 
             <View
@@ -91,7 +93,7 @@ const AdminPanel = ({ navigation }) => {
                 marginRight: 10,
               }}
             >
-              <ProductSalesChart inStock={inStock} outOfStock={outOfStock} />
+              <ProductSalesChart data={chartData} />
             </View>
 
             <View
@@ -102,7 +104,7 @@ const AdminPanel = ({ navigation }) => {
                 marginBottom: 500,
               }}
             >
-              <UserSalesChart inStock={inStock} outOfStock={outOfStock} />
+              <UserSalesChart data={chartData2} />
             </View>
 
             <View
@@ -113,7 +115,7 @@ const AdminPanel = ({ navigation }) => {
                 marginBottom: 500,
               }}
             >
-              <MonthlySalesChart inStock={inStock} outOfStock={outOfStock} />
+              <MonthlySalesChart data={chartData3} />
             </View>
           </ScrollView>
           

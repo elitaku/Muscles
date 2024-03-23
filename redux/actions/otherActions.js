@@ -435,3 +435,79 @@ export const placeOrder =
       });
     }
   };
+
+  export const fetchChart1Data = () => async (dispatch) => {
+    try {
+        dispatch({
+            type: "fetchChart1DataRequest",
+        })
+
+        const { data } = await axios.get(`${server}/order/Orders-per-Product-Category`, {
+            headers: {
+                "Content-Type": "application/json",
+            },
+            withCredentials: true
+        })
+
+        dispatch({
+            type: "fetchChart1DataSuccess",
+            payload: data
+        })
+
+    } catch (error) {
+        dispatch({
+            type: "fetchChart1DataFail",
+            payload: error.response.data.message
+        })
+    }
+}
+export const fetchChart2Data = () => async (dispatch) => {
+  try {
+      dispatch({
+          type: "fetchChart2DataRequest",
+      })
+
+      const { data } = await axios.get(`${server}/order/Orders-per-week`, {
+          headers: {
+              "Content-Type": "application/json",
+          },
+          withCredentials: true
+      })
+
+      dispatch({
+          type: "fetchChart2DataSuccess",
+          payload: data
+      })
+
+  } catch (error) {
+      dispatch({
+          type: "fetchChart2DataFail",
+          payload: error.response.data.message
+      })
+  }
+}
+export const fetchChart3Data = () => async (dispatch) => {
+  try {
+      dispatch({
+          type: "fetchChart3DataRequest",
+      })
+
+      const { data } = await axios.get(`${server}/order/Orders-per-month`, {
+          headers: {
+              "Content-Type": "application/json",
+          },
+          withCredentials: true
+      })
+
+      dispatch({
+          type: "fetchChart3DataSuccess",
+          payload: data
+      })
+
+  } catch (error) {
+      dispatch({
+          type: "fetchChart3DataFail",
+          payload: error.response.data.message
+      })
+  }
+}
