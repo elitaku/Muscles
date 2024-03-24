@@ -81,7 +81,12 @@ const UpdateCategory = ({ navigation, route }) => {
               }}
             >
               <Button
-                onPress={submitHandler}
+                onPress={() =>
+                  navigation.navigate("categoryimages", {
+                    id,
+                    images: categoryDetails.images,
+                  })
+                }
                 textColor={colors.color1}
                 disabled={loading}
               >

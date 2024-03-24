@@ -83,6 +83,33 @@ export const otherReducer = createReducer(
         state.loading = false;
         state.error = action.payload;
       })
+
+      //Update Category Images
+      .addCase("updateCategoryImageRequest", (state) => {
+        state.loading = true;
+      })
+      .addCase("updateCategoryImageSuccess", (state, action) => {
+        state.loading = false;
+        state.message = action.payload;
+      })
+      .addCase("updateCategoryImageFail", (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      
+      //Delete Category Images
+      .addCase("deleteCategoryImageRequest", (state) => {
+        state.loading = true;
+      })
+      .addCase("deleteCategoryImageSuccess", (state, action) => {
+        state.loading = false;
+        state.message = action.payload;
+      })
+      .addCase("deleteCategoryImageFail", (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      
       //Get Category
       .addCase("getCategoryDetailsRequest", (state) => {
         state.loading = true;

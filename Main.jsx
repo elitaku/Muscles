@@ -25,6 +25,7 @@ import ProductImages from "./screens/Admin/ProductImages";
 import Camera from "./screens/Camera";
 import { useDispatch, useSelector } from "react-redux";
 import { loadUser } from "./redux/actions/userActions";
+import CategoryImages from "./screens/Admin/CategoryImages";
 
 const Stack = createNativeStackNavigator();
 
@@ -73,6 +74,7 @@ const Main = () => {
           <Stack.Screen name="updatecategory" component={UpdateCategory} />
           <Stack.Screen name="newproduct" component={NewProduct} />
           <Stack.Screen name="productimages" component={ProductImages} />
+          <Stack.Screen name="categoryimages" component={CategoryImages} />
         </Stack.Group>
       </Stack.Navigator>
 

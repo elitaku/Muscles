@@ -290,6 +290,61 @@ export const deleteCategory = (id) => async (dispatch) => {
     });
   }
 };
+
+
+export const updateCategoryImage = (categoryId, formData) => async (dispatch) => {
+  try {
+    dispatch({
+      type: "updateCategoryImageRequest",
+    });
+
+    const { data } = await axios.post(
+      `${server}/category/images/${categoryId}`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+        withCredentials: true,
+      }
+    );
+
+    dispatch({
+      type: "updateCategoryImageSuccess",
+      payload: data.message,
+    });
+  } catch (error) {
+    dispatch({
+      type: "updateCategoryImageFail",
+      payload: error.response.data.message,
+    });
+  }
+};
+
+export const deleteCategoryImage = (categoryId, imageId) => async (dispatch) => {
+  try {
+    dispatch({
+      type: "deleteCategoryImageRequest",
+    });
+
+    const { data } = await axios.delete(
+      `${server}/category/images/${categoryId}?id=${imageId}`,
+      {
+        withCredentials: true,
+      }
+    );
+
+    dispatch({
+      type: "deleteCategoryImageSuccess",
+      payload: data.message,
+    });
+  } catch (error) {
+    dispatch({
+      type: "deleteCategoryImageFail",
+      payload: error.response.data.message,
+    });
+  }
+};
 //Category==================================================================
 
 
