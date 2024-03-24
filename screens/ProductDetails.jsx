@@ -12,13 +12,14 @@ import { getProductDetails } from "../redux/actions/productActions";
 import { server } from "../redux/store";
 import { AirbnbRating } from "react-native-ratings";
 import { Table, Row, Rows, Cell } from "react-native-table-component";
-
+import { deleteComment } from "../redux/actions/commentActions";
 const SLIDER_WIDTH = Dimensions.get("window").width;
 const ITEM_WIDTH = SLIDER_WIDTH;
 
 const ProductDetails = ({ route: { params } }) => {
   const dispatch = useDispatch();
   const isFocused = useIsFocused();
+  const user = useSelector(state => state.user);
 
   const {
     product: { name, price, stock, description, images },
@@ -84,9 +85,27 @@ const ProductDetails = ({ route: { params } }) => {
     fetchComments();
   }, [params.id, isFocused]);
 
-  useEffect(() => {
+  useEffect(() => {''
     dispatch(getProductDetails(params.id));
   }, [dispatch, params.id, isFocused]);
+
+  const handleDeleteComment = async (commentId) => {
+    try {
+      await dispatch(deleteComment(commentId));
+      Toast.show({
+        type: "success",
+        text1: "Comment deleted successfully",
+      });
+    } catch (error) {
+      console.error("Error deleting comment:", error);
+      Toast.show({
+        type: "error",
+        text1: "Failed to delete comment",
+      });
+    }
+  };
+
+  console.log(user.user.role)
 
   return (
     <ScrollView style={{ ...defaultStyle, padding: 0, backgroundColor: colors.color1 }}>
@@ -198,10 +217,15 @@ const ProductDetails = ({ route: { params } }) => {
         <FlatList
           data={comments}
           renderItem={({ item }) => (
-            <View style={{ marginBottom: 10, height: 100 }}>
+            <View style={{ marginBottom: 10 }}>
               <Text style={{ fontWeight: "bold" }}>{item.user}</Text>
               <Text>Rating: {item.rating}</Text>
               <Text>Comment {item.text}</Text>
+              {(user.user.role === 'admin' || item.user === user.user._id) && (
+                <TouchableOpacity onPress={() => handleDeleteComment(item._id)}>
+                  <Text style={{ color: 'red' }}>Delete</Text>
+                </TouchableOpacity>
+              )}
             </View>
           )}
           keyExtractor={(item, index) => index.toString()}

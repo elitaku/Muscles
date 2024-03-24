@@ -122,18 +122,18 @@ export const otherReducer = createReducer(
       })
       //==========================================================================
       //Comment===============================================
-      .addCase("addCommentRequest", (state) => {
-        state.loading = true;
-      })
-      .addCase("addCommentSuccess", (state, action) => {
-        state.loading = false;
-        state.message = action.payload;
-      })
-      .addCase("addCommentFail", (state, action) => {
-        state.loading = false;
-        state.error = action.payload;
-      })
-
+      // .addCase("addCommentRequest", (state) => {
+      //   state.loading = true;
+      // })
+      // .addCase("addCommentSuccess", (state, action) => {
+      //   state.loading = false;
+      //   state.message = action.payload;
+      // })
+      // .addCase("addCommentFail", (state, action) => {
+      //   state.loading = false;
+      //   state.error = action.payload;
+      // })
+//Comment=============================================================
       .addCase("deleteProductRequest", (state) => {
         state.loading = true;
       })

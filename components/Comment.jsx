@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { View, TextInput, Button, StyleSheet } from "react-native";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Rating } from 'react-native-ratings';
 import Toast from 'react-native-toast-message';
-import axios from 'axios'; // Import axios
-import { server } from "../redux/store"; 
+import { addComment } from "../redux/actions/commentActions";
 
 const Comment = () => {
   const user = useSelector(state => state.user);
   const product = useSelector(state => state.product);
+  const dispatch = useDispatch();
 
   const [text, setNewCommentText] = useState("");
   const [rating, setRating] = useState(0);
@@ -34,21 +34,7 @@ const Comment = () => {
   
       setIsLoading(true);
   
-      const commentData = {
-        text: text,
-        userId: user.user._id, // Assuming this is the correct user ID
-        productId: product.product._id, // Assuming this is the correct product ID
-        rating: rating
-      };
-  
-      const { data } = await axios.post(`${server}/comment/create`, commentData, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        withCredentials: true,
-      });
-  
-      console.log("Data after comment addition:", data);
+      await dispatch(addComment(text, user.user._id, product.product._id, rating));
   
       setNewCommentText("");
       setRating(0);
@@ -63,9 +49,6 @@ const Comment = () => {
       setIsLoading(false);
     }
   };
-console.log(user.user._id)  
-console.log(product.product._id)  
-
 
   return (
     <View style={styles.container}>
@@ -84,7 +67,7 @@ console.log(product.product._id)
         <Button
           title={"Add Comment"}
           onPress={handleAddComment}
-          disabled={isLoading} // Disable the button while loading
+          disabled={isLoading} 
         />
       </View>
       <Toast ref={(ref) => Toast.setRef(ref)} /> 
