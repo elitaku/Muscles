@@ -1,5 +1,14 @@
 import React, { useEffect, useRef, useState } from "react";
-import { View, Text, Dimensions, StyleSheet, Image, TouchableOpacity, FlatList, ScrollView } from "react-native";
+import {
+  View,
+  Text,
+  Dimensions,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  FlatList,
+  ScrollView,
+} from "react-native";
 import { defaultStyle, colors } from "../styles/styles";
 import Header from "../components/Header";
 import Comment from "../components/Comment";
@@ -19,7 +28,7 @@ const ITEM_WIDTH = SLIDER_WIDTH;
 const ProductDetails = ({ route: { params } }) => {
   const dispatch = useDispatch();
   const isFocused = useIsFocused();
-  const user = useSelector(state => state.user);
+  const user = useSelector((state) => state.user);
 
   const {
     product: { name, price, stock, description, images },
@@ -85,7 +94,8 @@ const ProductDetails = ({ route: { params } }) => {
     fetchComments();
   }, [params.id, isFocused]);
 
-  useEffect(() => {''
+  useEffect(() => {
+    "";
     dispatch(getProductDetails(params.id));
   }, [dispatch, params.id, isFocused]);
 
@@ -105,9 +115,10 @@ const ProductDetails = ({ route: { params } }) => {
     }
   };
 
-
   return (
-    <ScrollView style={{ ...defaultStyle, padding: 0, backgroundColor: colors.color1 }}>
+    <ScrollView
+      style={{ ...defaultStyle, padding: 0, backgroundColor: colors.color1 }}
+    >
       <Header back={true} />
       <Carousel
         layout="stack"
@@ -205,31 +216,34 @@ const ProductDetails = ({ route: { params } }) => {
             justifyContent: "space-between",
             alignItems: "center",
             marginBottom: 20,
-            marginTop: 20
+            marginTop: 20,
           }}
         >
           <Text style={{ fontSize: 20, fontWeight: "bold" }}>Comments</Text>
-          {/* Add any additional header elements here */}
         </View>
 
-        {/* Render reviews */}
         <FlatList
-  data={comments}
-  renderItem={({ item }) => (
-    <View style={{ marginBottom: 10 }}>
-      <Text style={{ fontWeight: "bold" }}>{item.user}</Text>
-      <Text>Rating: {item.rating}</Text>
-      <Text>Comment {item.text}</Text>
-      {(user && user.user) && (user.user.role === 'admin' || item.user === user.user._id || user.user.role === 'Guest') && (
-        <TouchableOpacity onPress={() => handleDeleteComment(item._id)}>
-          <Text style={{ color: 'red' }}>Delete</Text>
-        </TouchableOpacity>
-      )}
-    </View>
-  )}
-  keyExtractor={(item, index) => index.toString()}
-/>
-
+          data={comments}
+          renderItem={({ item }) => (
+            <View style={{ marginBottom: 10 }}>
+              <Text style={{ fontWeight: "bold" }}>{item.user}</Text>
+              <Text>Rating: {item.rating}</Text>
+              <Text>Comment {item.text}</Text>
+              {user &&
+                user.user &&
+                (user.user.role === "admin" ||
+                  item.user === user.user._id ||
+                  user.user.role === "Guest") && (
+                  <TouchableOpacity
+                    onPress={() => handleDeleteComment(item._id)}
+                  >
+                    <Text style={{ color: "red" }}>Delete</Text>
+                  </TouchableOpacity>
+                )}
+            </View>
+          )}
+          keyExtractor={(item, index) => index.toString()}
+        />
       </View>
       <Comment />
     </ScrollView>
