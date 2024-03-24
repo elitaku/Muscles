@@ -19,6 +19,7 @@ import AdminPanel from "./screens/Admin/AdminPanel";
 import Categories from "./screens/Admin/Categories";
 import AdminOrders from "./screens/Admin/AdminOrders";
 import UpdateProduct from "./screens/Admin/UpdateProduct";
+import UpdateCategory from "./screens/Admin/UpdateCategory";
 import NewProduct from "./screens/Admin/NewProduct";
 import ProductImages from "./screens/Admin/ProductImages";
 import Camera from "./screens/Camera";
@@ -69,6 +70,7 @@ const Main = () => {
           <Stack.Screen name="categories" component={Categories} />
           <Stack.Screen name="adminorders" component={AdminOrders} />
           <Stack.Screen name="updateproduct" component={UpdateProduct} />
+          <Stack.Screen name="updatecategory" component={UpdateCategory} />
           <Stack.Screen name="newproduct" component={NewProduct} />
           <Stack.Screen name="productimages" component={ProductImages} />
         </Stack.Group>
