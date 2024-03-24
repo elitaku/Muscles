@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { View, Text, Dimensions, StyleSheet, Image, TouchableOpacity, FlatList, ScrollView } from "react-native";
 import { defaultStyle, colors } from "../styles/styles";
 import Header from "../components/Header";
-import Comment from "../components/Comment";
+import Comment from "./Comment";
 import Carousel from "react-native-snap-carousel";
 import { Avatar, Button } from "react-native-paper";
 import Toast from "react-native-toast-message";

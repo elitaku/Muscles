@@ -2,6 +2,7 @@ import { View, Text, StyleSheet } from "react-native";
 import React from "react";
 import { colors } from "../styles/styles";
 import { Button } from "react-native-paper";
+import { useNavigation } from "@react-navigation/native";
 
 const OrderItem = ({
   id,
@@ -15,6 +16,12 @@ const OrderItem = ({
   loading,
   i = 0,
 }) => {
+  const navigation = useNavigation("Comment");
+
+  const getProductIds = () => {
+    return orderItems.map((item) => item.product);
+  };
+
   return (
     <View
       style={{
@@ -36,6 +43,20 @@ const OrderItem = ({
       <TextBox title={"Price"} value={price} i={i} />
       <TextBox title={"Status"} value={status} i={i} />
       <TextBox title={"Payment Method"} value={paymentMethod} i={i} />
+
+      {!admin && status === "Delivered" && (
+        <Button
+          textColor={colors.color2}
+          style={{
+            backgroundColor: colors.color1,
+            margin: 20,
+            padding: 6,
+          }}
+          onPress={() => navigation.navigate("comment", { orderItems: getProductIds })}
+        >
+          Write a Review
+        </Button>
+      )}
 
       {admin && (
         <Button

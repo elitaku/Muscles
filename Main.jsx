@@ -23,6 +23,7 @@ import UpdateCategory from "./screens/Admin/UpdateCategory";
 import NewProduct from "./screens/Admin/NewProduct";
 import ProductImages from "./screens/Admin/ProductImages";
 import Camera from "./screens/Camera";
+import Comment from "./screens/Comment";
 import { useDispatch, useSelector } from "react-redux";
 import { loadUser } from "./redux/actions/userActions";
 import CategoryImages from "./screens/Admin/CategoryImages";
@@ -60,6 +61,7 @@ const Main = () => {
           <Stack.Screen name="changepassword" component={ChangePassword} />
           <Stack.Screen name="orders" component={Orders} />
           <Stack.Screen name="camera" component={Camera} />
+          <Stack.Screen name="comment" component={Comment} />
 
           {/* Password Reset Routes */}
           <Stack.Screen name="forgetpassword" component={ForgetPassword} />
