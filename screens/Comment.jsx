@@ -7,6 +7,7 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from "react-native";
+import StarRating from "react-native-star-rating"; // Import the star rating component
 import { useDispatch, useSelector } from "react-redux";
 import { addComment } from "../redux/actions/otherActions";
 import enforcerImage from "../images/enforcer_stop.jpg";
@@ -15,6 +16,7 @@ import { inputOptions } from "../styles/styles";
 const Comment = () => {
   const [toastVisible, setToastVisible] = useState(false);
   const [commentText, setCommentText] = useState("");
+  const [starCount, setStarCount] = useState(0); // State for star rating
   const dispatch = useDispatch();
 
   // Assuming you have user and product data available from redux state
@@ -25,9 +27,10 @@ const Comment = () => {
 
   const handlePostComment = () => {
     const formData = new FormData();
-    formData.append("userId", user.id); // Assuming user ID is available
-    formData.append("productId", product.id); // Assuming product ID is available
+    formData.append("userId", user._id); // Assuming user ID is available
+    formData.append("productId", product._id); // Assuming product ID is available
     formData.append("text", commentText);
+    formData.append("rating", starCount); // Append the star rating to the form data
 
     dispatch(addComment(formData));
 
@@ -41,7 +44,7 @@ const Comment = () => {
   return (
     <View style={styles.container}>
       {/* Product Image */}
-      <Image source={enforcerImage} style={styles.image} />
+      {/* <Image source={enforcerImage} style={styles.image} /> */}
 
       {/* Product Details */}
       <View style={styles.productDetails}>
@@ -49,7 +52,17 @@ const Comment = () => {
         <Text style={styles.productId}>Product ID: {product.id}</Text>
       </View>
 
-      {/* Comment Input */}
+      {/* Star Rating */}
+      <StarRating
+        disabled={false}
+        maxStars={5}
+        rating={starCount}
+        selectedStar={(rating) => setStarCount(rating)}
+        fullStarColor={"gold"}
+        emptyStarColor={"gold"}
+      />
+
+      {/* Comment Input and Button Container */}
       <View style={styles.commentInputContainer}>
         <TextInput
           {...inputOptions}
@@ -57,17 +70,16 @@ const Comment = () => {
           multiline={true}
           value={commentText}
           onChangeText={setCommentText}
+          style={styles.commentInput} // Added style
         />
+        <TouchableOpacity
+          style={[styles.postButton, { marginLeft: 10 }]} // Added marginLeft to separate button from input
+          onPress={handlePostComment}
+          disabled={disableBtnCondition}
+        >
+          <Text style={styles.postButtonText}>Post Comment</Text>
+        </TouchableOpacity>
       </View>
-
-      {/* Post Comment Button */}
-      <TouchableOpacity
-        style={styles.postButton}
-        onPress={handlePostComment}
-        disabled={disableBtnCondition}
-      >
-        <Text style={styles.postButtonText}>Post Comment</Text>
-      </TouchableOpacity>
 
       {/* Toast */}
       {toastVisible && (
@@ -105,16 +117,18 @@ const styles = StyleSheet.create({
     color: "grey",
   },
   commentInputContainer: {
+    flexDirection: "row", // Arrange children horizontally
+    alignItems: "center", // Center items vertically
     width: "80%",
+    marginBottom: 10,
+  },
+  commentInput: {
+    flex: 1, // Take remaining space
     borderWidth: 1,
     borderColor: "lightgrey",
     borderRadius: 5,
     paddingHorizontal: 10,
     paddingVertical: 5,
-    marginBottom: 10,
-  },
-  commentInput: {
-    height: 100,
   },
   postButton: {
     backgroundColor: "blue",

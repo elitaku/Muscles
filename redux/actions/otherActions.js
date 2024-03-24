@@ -381,10 +381,13 @@ export const addComment = (formData) => async (dispatch) => {
 
     const { data } = await axios.post(`${server}/comment/create`, formData, {
       headers: {
-        "Content-Type": "multipart/form-data",
+        "Content-Type": "application/json",
       },
       withCredentials: true,
     });
+
+    // Log the data if the request is successful
+    console.log("Data after comment addition:", data);
 
     dispatch({
       type: "addCommentSuccess",
@@ -397,6 +400,7 @@ export const addComment = (formData) => async (dispatch) => {
     });
   }
 };
+
 
 export const updateProduct =
   (id, name, description, price, stock, category) => async (dispatch) => {

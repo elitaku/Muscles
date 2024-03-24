@@ -3,7 +3,6 @@ import { View, Text, ScrollView } from "react-native";
 import { Button, TextInput } from "react-native-paper";
 import { useIsFocused } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
-import axios from "axios";
 import { updateCategory, getCategoryDetails } from "../../redux/actions/otherActions";
 import Header from "../../components/Header";
 import Loader from "../../components/Loader";

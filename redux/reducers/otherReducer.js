@@ -32,9 +32,7 @@ export const otherReducer = createReducer(
       .addCase("addProductRequest", (state) => {
         state.loading = true;
       })
-      .addCase("addCommentRequest", (state) => {
-        state.loading = true;
-      })
+
       .addCase("updateProductRequest", (state) => {
         state.loading = true;
       })
@@ -123,6 +121,18 @@ export const otherReducer = createReducer(
         state.error = action.payload;
       })
       //==========================================================================
+      //Comment===============================================
+      .addCase("addCommentRequest", (state) => {
+        state.loading = true;
+      })
+      .addCase("addCommentSuccess", (state, action) => {
+        state.loading = false;
+        state.message = action.payload;
+      })
+      .addCase("addCommentFail", (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
 
       .addCase("deleteProductRequest", (state) => {
         state.loading = true;
@@ -158,10 +168,7 @@ export const otherReducer = createReducer(
         state.loading = false;
         state.message = action.payload;
       })
-      .addCase("addCommentSuccess", (state, action) => {
-        state.loading = false;
-        state.message = action.payload;
-      })
+
       .addCase("updateProductSuccess", (state, action) => {
         state.loading = false;
         state.message = action.payload;
@@ -211,10 +218,7 @@ export const otherReducer = createReducer(
         state.loading = false;
         state.error = action.payload;
       })
-      .addCase("addCommentFail", (state, action) => {
-        state.loading = false;
-        state.error = action.payload;
-      })
+
       .addCase("updateProductFail", (state, action) => {
         state.loading = false;
         state.error = action.payload;
