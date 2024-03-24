@@ -24,6 +24,7 @@ import { Table, Row, Rows, Cell } from "react-native-table-component";
 import { deleteComment } from "../redux/actions/commentActions";
 const SLIDER_WIDTH = Dimensions.get("window").width;
 const ITEM_WIDTH = SLIDER_WIDTH;
+import { FontAwesome } from 'react-native-vector-icons';
 
 const ProductDetails = ({ route: { params } }) => {
   const dispatch = useDispatch();
@@ -35,9 +36,9 @@ const ProductDetails = ({ route: { params } }) => {
   } = useSelector((state) => state.product);
 
   const [comments, setComments] = useState([]);
-
   const isCarousel = useRef(null);
   const [quantity, setQuantity] = useState(1);
+  const isOutOfStock = stock === 0;
 
   const incrementQty = () => {
     if (stock <= quantity) {
@@ -77,6 +78,25 @@ const ProductDetails = ({ route: { params } }) => {
     Toast.show({
       type: "success",
       text1: "Added To Cart",
+    });
+  };
+
+  const addToWishlistHandler = (id, name, price, image, stock) => {
+    dispatch({
+      type: "addToWishlist",
+      payload: {
+        product:
+          id,
+          name,
+          price,
+          image,
+          stock,
+      }
+    })
+    
+    Toast.show({
+      type: "success",
+      text1: "Added To Wishlist",
     });
   };
 
@@ -196,11 +216,24 @@ const ProductDetails = ({ route: { params } }) => {
           </View>
         </View>
 
-        <TouchableOpacity activeOpacity={0.9} onPress={addToCardHandler}>
-          <Button icon={"cart"} style={style.btn} textColor={colors.color2}>
-            Add To Cart
-          </Button>
-        </TouchableOpacity>
+        <View style={{ flexDirection: "row", marginTop: 20 }}>
+          <TouchableOpacity 
+          activeOpacity={0.9} 
+          onPress={addToCardHandler} 
+          style={{ flex: 8 }}
+          disabled={isOutOfStock}>
+            <Button 
+            icon={"cart"} 
+            style={style.btn} 
+            textColor={isOutOfStock ? colors.color2 : colors.color2}
+            >
+              {isOutOfStock ? "Out Of Stock" : "Add To Cart"}
+            </Button>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => addToWishlistHandler(params.id, name, price, images[0]?.url, stock)} style={{ flex: 2, justifyContent: 'center', alignItems: 'center', padding: 10 }}>
+            <FontAwesome name="heart" size={24} color={colors.color1} />
+          </TouchableOpacity>
+        </View>
 
         {/* Rating */}
         <AirbnbRating

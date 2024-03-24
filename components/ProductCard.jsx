@@ -2,6 +2,7 @@ import { View, Text, TouchableOpacity, Image } from "react-native";
 import React from "react";
 import { colors } from "../styles/styles";
 import { Button } from "react-native-paper";
+import { FontAwesome } from 'react-native-vector-icons';
 
 const ProductCard = ({
   stock,
@@ -10,9 +11,12 @@ const ProductCard = ({
   image,
   id,
   addToCardHandler,
+  addToWishlistHandler,
   i,
   navigate,
 }) => {
+  const isOutOfStock = stock === 0;
+
   return (
     <TouchableOpacity
       activeOpacity={1}
@@ -76,8 +80,11 @@ const ProductCard = ({
           </Text>
         </View>
 
-        <TouchableOpacity
+        <View
           style={{
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "center",
             backgroundColor: i % 2 === 0 ? colors.color2 : colors.color3,
             borderRadius: 0,
             paddingVertical: 5,
@@ -89,10 +96,22 @@ const ProductCard = ({
           <Button
             onPress={() => addToCardHandler(id, name, price, image, stock)}
             textColor={i % 2 === 0 ? colors.color1 : colors.color2}
+            style={{ flex: 8 }}
+            disabled={isOutOfStock}
           >
-            Add To Cart
+            {isOutOfStock ? "Out Of Stock" : "Add To Cart"}
           </Button>
-        </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => addToWishlistHandler(id, name, price, image, stock)}
+            style={{ flex: 2, padding: 10 }}
+          >
+            <FontAwesome
+              name="heart"
+              size={24}
+              color={colors.color1}
+            />
+          </TouchableOpacity>
+        </View>
       </View>
     </TouchableOpacity>
   );

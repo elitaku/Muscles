@@ -55,6 +55,25 @@ const Home = () => {
     });
   };
 
+  const addToWishlistHandler = (id, name, price, image, stock) => {
+    dispatch({
+      type: "addToWishlist",
+      payload: {
+        product:
+          id,
+          name,
+          price,
+          image,
+          stock,
+      }
+    })
+    
+    Toast.show({
+      type: "success",
+      text1: "Added To Wishlist",
+    });
+  };
+
   useSetCategories(setCategories, isFocused);
 
   useEffect(() => {
@@ -154,6 +173,7 @@ const Home = () => {
                 price={item.price}
                 image={item.images[0]?.url}
                 addToCardHandler={addToCardHandler}
+                addToWishlistHandler={addToWishlistHandler}
                 id={item._id}
                 key={item._id}
                 i={index}

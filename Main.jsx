@@ -27,6 +27,7 @@ import Comment from "./screens/Comment";
 import { useDispatch, useSelector } from "react-redux";
 import { loadUser } from "./redux/actions/userActions";
 import CategoryImages from "./screens/Admin/CategoryImages";
+import Wishlist from "./screens/Wishlist";
 
 const Stack = createNativeStackNavigator();
 
@@ -52,6 +53,7 @@ const Main = () => {
           <Stack.Screen name="home" component={Home} />
           <Stack.Screen name="productdetails" component={ProductDetails} />
           <Stack.Screen name="cart" component={Cart} />
+          <Stack.Screen name="wishlist" component={Wishlist} />
           <Stack.Screen name="confirmorder" component={ConfirmOrder} />
           <Stack.Screen name="payment" component={Payment} />
           <Stack.Screen name="login" component={Login} />

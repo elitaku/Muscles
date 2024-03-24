@@ -38,7 +38,8 @@ const Cart = () => {
   const decrementHandler = (id, name, price, image, stock, quantity) => {
     const newQty = quantity - 1;
 
-    if (1 >= quantity) return dispatch({ type: "removeFromCart", payload: id });
+    if (1 >= quantity) 
+    return dispatch({ type: "removeFromCart", payload: id });
 
     dispatch({
       type: "addToCart",
