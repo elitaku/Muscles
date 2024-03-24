@@ -105,7 +105,6 @@ const ProductDetails = ({ route: { params } }) => {
     }
   };
 
-  console.log(user.user.role)
 
   return (
     <ScrollView style={{ ...defaultStyle, padding: 0, backgroundColor: colors.color1 }}>
@@ -215,21 +214,22 @@ const ProductDetails = ({ route: { params } }) => {
 
         {/* Render reviews */}
         <FlatList
-          data={comments}
-          renderItem={({ item }) => (
-            <View style={{ marginBottom: 10 }}>
-              <Text style={{ fontWeight: "bold" }}>{item.user}</Text>
-              <Text>Rating: {item.rating}</Text>
-              <Text>Comment {item.text}</Text>
-              {(user.user.role === 'admin' || item.user === user.user._id) && (
-                <TouchableOpacity onPress={() => handleDeleteComment(item._id)}>
-                  <Text style={{ color: 'red' }}>Delete</Text>
-                </TouchableOpacity>
-              )}
-            </View>
-          )}
-          keyExtractor={(item, index) => index.toString()}
-        />
+  data={comments}
+  renderItem={({ item }) => (
+    <View style={{ marginBottom: 10 }}>
+      <Text style={{ fontWeight: "bold" }}>{item.user}</Text>
+      <Text>Rating: {item.rating}</Text>
+      <Text>Comment {item.text}</Text>
+      {(user && user.user) && (user.user.role === 'admin' || item.user === user.user._id || user.user.role === 'Guest') && (
+        <TouchableOpacity onPress={() => handleDeleteComment(item._id)}>
+          <Text style={{ color: 'red' }}>Delete</Text>
+        </TouchableOpacity>
+      )}
+    </View>
+  )}
+  keyExtractor={(item, index) => index.toString()}
+/>
+
       </View>
       <Comment />
     </ScrollView>
