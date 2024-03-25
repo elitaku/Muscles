@@ -22,6 +22,7 @@ import UpdateProduct from "./screens/Admin/UpdateProduct";
 import UpdateCategory from "./screens/Admin/UpdateCategory";
 import NewProduct from "./screens/Admin/NewProduct";
 import ProductImages from "./screens/Admin/ProductImages";
+import Analytics from "./screens/Admin/Analytics";
 import Camera from "./screens/Camera";
 import Comment from "./screens/Comment";
 import { useDispatch, useSelector } from "react-redux";
@@ -74,6 +75,7 @@ const Main = () => {
           <Stack.Screen name="adminpanel" component={AdminPanel} />
           <Stack.Screen name="categories" component={Categories} />
           <Stack.Screen name="adminorders" component={AdminOrders} />
+          <Stack.Screen name="analytics" component={Analytics} />
           <Stack.Screen name="updateproduct" component={UpdateProduct} />
           <Stack.Screen name="updatecategory" component={UpdateCategory} />
           <Stack.Screen name="newproduct" component={NewProduct} />

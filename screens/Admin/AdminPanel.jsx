@@ -3,7 +3,7 @@ import React from "react";
 import { colors, defaultStyle, formHeading } from "../../styles/styles";
 import Header from "../../components/Header";
 import Loader from "../../components/Loader";
-import ButtonBox from "../../components/ButtonBox";
+import AdminButtonBox from "../../components/AdminButtonBox";
 import ProductListHeading from "../../components/ProductListHeading";
 import ProductListItem from "../../components/ProductListItem";
 import Chart from "../../components/Chart";
@@ -34,6 +34,9 @@ const AdminPanel = ({ navigation }) => {
         break;
       case "All Orders":
         navigation.navigate("adminorders");
+        break;
+      case "Analytics":
+        navigation.navigate("analytics");
         break;
       case "Product":
         navigation.navigate("newproduct");
@@ -68,7 +71,7 @@ const AdminPanel = ({ navigation }) => {
         <Loader />
       ) : (
         <>
-          <ScrollView 
+          {/* <ScrollView
             horizontal={true}
             showsHorizontalScrollIndicator={false}
           >
@@ -77,11 +80,11 @@ const AdminPanel = ({ navigation }) => {
                 backgroundColor: colors.color3,
                 borderRadius: 20,
                 alignItems: "center",
-                marginBottom: 250,
+                marginBottom: 600,
                 marginRight: 10,
               }}
             >
-              {/* <Chart inStock={inStock} outOfStock={outOfStock} /> */}
+              <Chart inStock={inStock} outOfStock={outOfStock} />
             </View>
 
             <View
@@ -89,7 +92,7 @@ const AdminPanel = ({ navigation }) => {
                 backgroundColor: colors.color3,
                 borderRadius: 20,
                 alignItems: "center",
-                marginBottom: 250,
+                marginBottom: 600,
                 marginRight: 10,
               }}
             >
@@ -101,7 +104,8 @@ const AdminPanel = ({ navigation }) => {
                 backgroundColor: colors.color3,
                 borderRadius: 20,
                 alignItems: "center",
-                marginBottom: 500,
+                marginBottom: 600,
+                marginRight: 10,
               }}
             >
               <UserSalesChart data={chartData2} />
@@ -112,34 +116,52 @@ const AdminPanel = ({ navigation }) => {
                 backgroundColor: colors.color3,
                 borderRadius: 20,
                 alignItems: "center",
-                marginBottom: 500,
+                marginBottom: 600,
               }}
             >
               <MonthlySalesChart data={chartData3} />
             </View>
-          </ScrollView>
-          
+          </ScrollView> */}
+
           <View>
             <View
               style={{
                 flexDirection: "row",
-                margin: 10,
-                justifyContent: "space-between",
+                // padding: 10,
+                justifyContent: "space-evenly",
               }}
             >
-              <ButtonBox
+              <AdminButtonBox
                 icon={"plus"}
                 text={"Product"}
                 handler={navigationHandler}
               />
 
-              <ButtonBox
+              <AdminButtonBox
                 icon={"format-list-bulleted-square"}
                 text={"All Orders"}
                 handler={navigationHandler}
                 reverse={true}
               />
-              <ButtonBox
+            </View>
+          </View>
+
+          <View>
+            <View
+              style={{
+                flexDirection: "row",
+                margin: 10,
+                justifyContent: "space-evenly",
+              }}
+            >
+              <AdminButtonBox
+                icon={"graph-outline"}
+                text={"Analytics"}
+                handler={navigationHandler}
+                reverse={true}
+              />
+
+              <AdminButtonBox
                 icon={"plus"}
                 text={"Category"}
                 handler={navigationHandler}

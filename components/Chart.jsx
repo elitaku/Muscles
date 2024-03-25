@@ -30,10 +30,12 @@ const Chart = ({ inStock = 0, outOfStock = 0 }) => {
             <PieChart
                 data={data}
                 width={screenWidth}
-                height={180}
+                height={200}
                 chartConfig={chartConfig}
                 accessor={"population"}
-                backgroundColor={colors.color3}
+                // backgroundColor={colors.color3}
+                backgroundColor={"transparent"}
+                paddingLeft={"15"}
                 absolute
             />
         </View>

@@ -44,11 +44,14 @@ const ProductSalesChart = ({ data }) => {
             <PieChart
                 data={chartData}
                 width={screenWidth}
-                height={180}
+                height={200}
                 chartConfig={chartConfig}
                 accessor={"population"}
-                backgroundColor={colors.color3}
+                // backgroundColor={colors.color3}
+                backgroundColor={"transparent"}
+                paddingLeft={"15"}
                 absolute
+                
             />
         </View>
     );

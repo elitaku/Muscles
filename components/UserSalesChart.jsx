@@ -14,6 +14,9 @@ const UserSalesChart = ({ data }) => {
     };
 
     const chartConfig = {
+        // backgroundColor: "#e26a00",
+        backgroundGradientFrom: "rgb(45,45,45)",
+        backgroundGradientTo: "rgb(45,45,45)",
         decimalPlaces: 0, // optional, defaults to 2dp
         color: (opacity = 1, index) => randomColor(),
         labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
@@ -30,28 +33,33 @@ const UserSalesChart = ({ data }) => {
     console.log(data)
     if (!transformedData.length) {
         return <Text>No orders to display</Text>;
-      }
-      
-      return (
+    }
+
+    return (
         <View>
-          <BarChart
-             data={{
+            <BarChart
+                data={{
                     labels: labels,
                     datasets: [
-                        {data: transformedData}
+                        { data: transformedData }
                     ]
                 }}
                 width={screenWidth}
-                height={180}
+                height={200}
                 yAxisLabel="$"
-                yAxisSuffix="k"
+                // yAxisSuffix="k"
                 yAxisInterval={1} // optional, defaults to 1
                 chartConfig={chartConfig}
+                style={{
+                    marginVertical: 8,
+                    borderRadius: 16
+                }}
+                // backgroundColor={colors.color3}
                 absolute
                 bezier
             />
         </View>
-      );
+    );
 };
 
 export default UserSalesChart;
