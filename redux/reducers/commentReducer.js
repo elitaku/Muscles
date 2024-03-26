@@ -4,9 +4,10 @@ const initialState = {
   comments: [],
   loading: false,
   error: null,
+  message: null, // Adding message field for success message
 };
 
- export const commentReducer = createReducer(initialState, (builder) => {
+export const commentReducer = createReducer(initialState, (builder) => {
   builder
     .addCase("getAllCommentsRequest", (state) => {
       state.loading = true;
@@ -22,10 +23,11 @@ const initialState = {
     })
     .addCase("addCommentRequest", (state) => {
       state.loading = true;
+      state.error = null; // Clearing any previous errors
     })
-    .addCase("addCommentSuccess", (state, action) => {
+    .addCase("addCommentSuccess", (state) => {
       state.loading = false;
-      state.message = action.payload;
+      state.message = "Comment added successfully"; // Setting success message
     })
     .addCase("addCommentFail", (state, action) => {
       state.loading = false;
@@ -33,16 +35,16 @@ const initialState = {
     })
     .addCase("deleteCommentRequest", (state) => {
       state.loading = true;
+      state.error = null; // Clearing any previous errors
     })
-    .addCase("deleteCommentSuccess", (state, action) => {
+    .addCase("deleteCommentSuccess", (state) => {
       state.loading = false;
-      state.message = action.payload;
+      state.message = "Comment deleted successfully"; // Setting success message
     })
     .addCase("deleteCommentFail", (state, action) => {
       state.loading = false;
       state.error = action.payload;
-    })
-
+    });
 });
 
 export default commentReducer;

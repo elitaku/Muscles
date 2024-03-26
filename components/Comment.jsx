@@ -23,32 +23,40 @@ const Comment = () => {
     });
   };
 
-  const handleAddComment = async () => {
-    try {
-      console.log("Submitting comment...");
+  const handleAddComment = () => {
+    console.log("Submitting comment...");
   
-      if (!text) {
-        showToast('error', 'Please enter a comment.');
-        return;
-      }
-  
-      setIsLoading(true);
-  
-      await dispatch(addComment(text, user.user._id, product.product._id, rating));
-  
-      setNewCommentText("");
-      setRating(0);
-      showToast('success', 'Comment added successfully');
-    } catch (error) {
-      console.error("Error adding comment:", error);
-      showToast('error', 'Failed to add comment');
-      if (error.response) {
-        console.error("Server response data:", error.response.data);
-      }
-    } finally {
-      setIsLoading(false);
+    if (!text) {
+      showToast('error', 'Please enter a comment.');
+      setIsLoading(false); 
+      return;
     }
-  };
+  
+    setIsLoading(true);
+  
+    dispatch(addComment(text, user.user._id, product.product._id, rating))
+      .then((response) => {
+        setNewCommentText("");
+        setRating(0);
+        console.log("Comment added successfully:", response.data); 
+        showToast('success', 'Comment added successfully');
+      })
+      .catch((error) => {
+        console.error("Error adding comment:", error);
+        showToast('error', 'Purchase required for comments');
+        if (error.response) {
+          console.error("Server response data:", error.response.data);
+          showToast('error', error.response.data.message); 
+        }
+      })
+      .finally(() => {
+        setIsLoading(false); 
+      });
+};
+
+  
+  
+  
 
   return (
     <View style={styles.container}>

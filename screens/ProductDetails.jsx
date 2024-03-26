@@ -261,7 +261,7 @@ const ProductDetails = ({ route: { params } }) => {
             <View style={{ marginBottom: 10 }}>
               <Text style={{ fontWeight: "bold" }}>{item.user}</Text>
               <Text>Rating: {item.rating}</Text>
-              <Text>Comment {item.text}</Text>
+              <Text>Comment: {item.text}</Text>
               {user &&
                 user.user &&
                 (user.user.role === "admin" ||
