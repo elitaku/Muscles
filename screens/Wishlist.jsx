@@ -28,13 +28,13 @@ const Wishlist = () => {
         }}
         >
         {/* Header */}
-        <Header back={true} emptyWishlist={true} />
+        {/* <Header back={true} emptyWishlist={true} /> */}
 
 
         {/* Heading */}
         <Heading
             text1="Wishlist"
-            containerStyle={{ paddingTop: 70, marginLeft: 35 }}
+            containerStyle={{ paddingTop: 10, marginLeft: 35 }}
         />
 
         <View

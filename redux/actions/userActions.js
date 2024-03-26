@@ -9,7 +9,7 @@ export const register = (formData) => async (dispatch) => {
         })
 
         // Axios request
-
+        console.log(formData._parts[8][1])
         const { data } = await axios.post(`${server}/user/new`, 
 
         formData
@@ -26,7 +26,7 @@ export const register = (formData) => async (dispatch) => {
         })
 
     } catch (error) {
-        
+        console.log(error)
         dispatch({
             type: "registerFail",
             payload: error.response.data.message
@@ -127,4 +127,33 @@ export const logout = () => async (dispatch) => {
         })
     }
 
+}
+
+export const verifyToken = (idToken) => async (dispatch) => {
+        try {
+            dispatch({
+                type: "verifyTokenRequest",
+            })
+            // Axios request
+            const { data } = await axios.post(`${server}/user/verifyidtoken`, {
+                idToken
+            },{
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                withCredentials: true
+            })
+            
+            dispatch({
+                type: "verifyTokenSuccess",
+                payload: data.message
+            })
+    
+        } catch (error) {
+            
+            dispatch({
+                type: "verifyTokenFail",
+                payload: error.response.data
+            })
+        }
 }

@@ -16,5 +16,17 @@ export const store = configureStore({
     wishlist: wishlistReducer
   },
 });
+//Deployed server
+// export const server = "https://mbackend-p19q.onrender.com/api/v1"
 
-export const server = "https://mbackend-p19q.onrender.com/api/v1"
+//Home IP
+// export const server = "http://192.168.5.234:5000/api/v1"
+
+//Kapehan IP
+// export const server = "http://192.168.0.192:5000/api/v1"
+
+//Bahay ni wanel IP
+// export const server = "http://192.168.100.126:5000/api/v1"
+
+//Hotspot ko
+export const server = "http://192.168.124.139:5000/api/v1"

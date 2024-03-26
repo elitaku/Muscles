@@ -61,13 +61,13 @@ const Cart = () => {
       }}
     >
       {/* Header */}
-      <Header back={true} emptyCart={true} />
+      {/* <Header back={true} emptyCart={true} /> */}
 
       {/* Heading */}
       <Heading
         text1="Shopping"
         text2="Cart"
-        containerStyle={{ paddingTop: 70, marginLeft: 35 }}
+        containerStyle={{ paddingTop: 10, marginLeft: 35 }}
       />
 
       <View

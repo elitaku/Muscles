@@ -19,8 +19,8 @@ import {
 import { useIsFocused } from "@react-navigation/native";
 import mime from "mime";
 import { updatePic } from "../redux/actions/otherActions";
-
-
+import { GoogleSignin } from "@react-native-google-signin/google-signin";
+import { CLIENT_ID_ANDROID, CLIENT_ID_IOS, CLIENT_ID_WEB } from "@env";
 const Profile = ({ navigation, route }) => {
     const { user } = useSelector((state) => state.user);
     const [avatar, setAvatar] = useState(user?.avatar ? user.avatar.url : defaultImg);
@@ -29,11 +29,31 @@ const Profile = ({ navigation, route }) => {
     const isFocused = useIsFocused();
     
     const loading = useMessageAndErrorUser(navigation, dispatch, "login");
-
+    const configureGoogleSignIn = () => {
+        GoogleSignin.configure({
+          webClientId: CLIENT_ID_WEB,
+          androidClientId: CLIENT_ID_ANDROID,
+          iosClientId: CLIENT_ID_IOS,
+        });
+      }
+    useEffect(() => {
+        
+        configureGoogleSignIn();
+        
+      });
     const logoutHandler = () => {
+        if (user.signInMethod === "google") {
+            signOut();
+        }
         dispatch(logout());
     };
-
+    const signOut = async () => {
+        try{
+            await GoogleSignin.signOut();
+        }catch (error){
+            console.log(error)
+        }
+    }
     const navigateHandler = (text) => {
         switch (text) {
             case "Admin":
@@ -148,11 +168,11 @@ const Profile = ({ navigation, route }) => {
                                     justifyContent: "space-between",
                                 }}
                             >
-                                <ButtonBox
+                                {/* <ButtonBox
                                     handler={navigateHandler}
                                     text={"Orders"}
                                     icon={"format-list-bulleted-square"}
-                                />
+                                /> */}
                                 {user?.role === "admin" && (
                                     <ButtonBox
                                         handler={navigateHandler}
@@ -161,21 +181,6 @@ const Profile = ({ navigation, route }) => {
                                         reverse={true}
                                     />
                                 )}
-                                
-                                <ButtonBox
-                                    handler={navigateHandler}
-                                    text={"Profile"}
-                                    icon={"pencil"}
-                                />
-                            </View>
-
-                            <View
-                                style={{
-                                    flexDirection: "row",
-                                    margin: 10,
-                                    justifyContent: "space-evenly",
-                                }}
-                            >
                                 <ButtonBox
                                     handler={navigateHandler}
                                     text={"Password"}
@@ -183,10 +188,12 @@ const Profile = ({ navigation, route }) => {
                                 />
                                 <ButtonBox
                                     handler={navigateHandler}
-                                    text={"Sign Out"}
-                                    icon={"exit-to-app"}
+                                    text={"Profile"}
+                                    icon={"pencil"}
                                 />
                             </View>
+
+                           
                         </View>
                     </>
                 )}

@@ -11,7 +11,7 @@ import {
 import { Avatar, Button, TextInput } from "react-native-paper";
 import Footer from "../components/Footer";
 import mime from "mime";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useMessageAndErrorUser } from "../utils/hooks";
 import { register } from "../redux/actions/userActions";
 
@@ -24,10 +24,11 @@ const SignUp = ({ navigation, route }) => {
     const [city, setCity] = useState("");
     const [country, setCountry] = useState("");
     const [pinCode, setPinCode] = useState("");
+    const [googleId, setGoogleId] = useState();
 
     const dispatch = useDispatch();
-
-    const disableBtn =
+    const { user } = useSelector((state) => state.user)
+    const disableBtn = googleId ? !name || !email || !address || !city || !country || !pinCode :
         !name || !email || !password || !address || !city || !country || !pinCode;
 
     const submitHandler = () => {
@@ -40,24 +41,37 @@ const SignUp = ({ navigation, route }) => {
         myForm.append("city", city);
         myForm.append("country", country);
         myForm.append("pinCode", pinCode);
-
-        if (avatar !== "") {
-            myForm.append("file", {
-                uri: avatar,
-                type: mime.getType(avatar),
-                name: avatar.split("/").pop(),
-            });
+        myForm.append("googleId", googleId);
+        if (googleId) {
+            myForm.append("file", avatar);
+        } else {
+            if (avatar !== "") {
+                myForm.append("file", {
+                    uri: avatar,
+                    type: mime.getType(avatar),
+                    name: avatar.split("/").pop(),
+                });
+            }
         }
-
         dispatch(register(myForm));
     };
 
     const loading = useMessageAndErrorUser(navigation, dispatch, "profile");
+    useEffect(() => {
+        if (user) {
 
+            setName(user.name)
+            setEmail(user.email)
+            setAvatar(user.picture)
+            setGoogleId(user.sub)
+            setPassword(googleId)
+
+        }
+    }, [user])
     useEffect(() => {
         if (route.params?.image) setAvatar(route.params.image);
     }, [route.params]);
-    
+
     return (
         <>
             <View style={defaultStyle}>
@@ -104,14 +118,14 @@ const SignUp = ({ navigation, route }) => {
                             value={email}
                             onChangeText={setEmail}
                         />
-
-                        <TextInput
+                        {!googleId && <TextInput
                             {...inputOptions}
                             secureTextEntry={true}
                             placeholder="Password"
                             value={password}
                             onChangeText={setPassword}
-                        />
+                        />}
+
 
                         <TextInput
                             {...inputOptions}
@@ -153,7 +167,9 @@ const SignUp = ({ navigation, route }) => {
 
                         <TouchableOpacity
                             activeOpacity={0.8}
-                            onPress={() => navigation.navigate("login")}
+                            onPress={() => {
+                                dispatch({type: "resetUser"})
+                                navigation.navigate("login")}}
                         >
                             <Text style={styles.link}>Log In</Text>
                         </TouchableOpacity>

@@ -86,12 +86,14 @@ export const useSetCategories = (setCategories, isFocused) => {
     axios
       .get(`${server}/category/all`)
       .then((res) => {
+        console.log(res)
         setCategories(res.data.categories);
       })
       .catch((e) => {
+        console.log(e.message)
         Toast.show({
           type: "error",
-          text1: e.response.data.message,
+          text1: e.message,
         });
       });
   }, [isFocused]);

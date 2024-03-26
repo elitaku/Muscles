@@ -96,12 +96,12 @@ const Home = () => {
         />
       )}
       <View style={defaultStyle}>
-        <Header />
+        {/* <Header /> */}
 
         {/* Heading Row*/}
         <View
           style={{
-            paddingTop: 70,
+            paddingTop: 10,
             flexDirection: "row",
             justifyContent: "space-between",
             alignItems: "center",
