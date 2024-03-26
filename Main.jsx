@@ -1,6 +1,10 @@
 import React, { useEffect } from "react";
 
-import { DrawerContentScrollView, DrawerItemList, DrawerItem } from "@react-navigation/drawer";
+import {
+  DrawerContentScrollView,
+  DrawerItemList,
+  DrawerItem,
+} from "@react-navigation/drawer";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createDrawerNavigator } from "@react-navigation/drawer";
@@ -31,8 +35,8 @@ import Camera from "./screens/Camera";
 import Comment from "./screens/Comment";
 import { useDispatch, useSelector } from "react-redux";
 import { loadUser, logout } from "./redux/actions/userActions";
-import { View, Text, TouchableOpacity } from 'react-native'
-import { Avatar } from 'react-native-paper'
+import { View, Text, TouchableOpacity } from "react-native";
+import { Avatar } from "react-native-paper";
 import CategoryImages from "./screens/Admin/CategoryImages";
 import Wishlist from "./screens/Wishlist";
 import { GoogleSignin } from "@react-native-google-signin/google-signin";
@@ -44,13 +48,13 @@ import {
   defaultImg,
   defaultStyle,
   formHeading,
-  formStyles as styles
+  formStyles as styles,
 } from "./styles/styles";
 import { useMessageAndErrorUser } from "./utils/hooks";
 const CustomDrawerContent = (props) => {
   const { user, isAuthenticated } = useSelector((state) => state.user);
   const dispatch = useDispatch();
-  const {navigation } = props
+  const { navigation } = props;
   const loading = useMessageAndErrorUser(navigation, dispatch, "profile");
   const loadingSignOut = useMessageAndErrorUser(navigation, dispatch, "login");
   const configureGoogleSignIn = () => {
@@ -59,18 +63,16 @@ const CustomDrawerContent = (props) => {
       androidClientId: CLIENT_ID_ANDROID,
       iosClientId: CLIENT_ID_IOS,
     });
-  }
-useEffect(() => {
-    
+  };
+  useEffect(() => {
     configureGoogleSignIn();
-    
   });
   const navigateToHome = () => {
     navigation.reset({
       index: 0,
-      routes: [{ name: 'Home' }]
-    })
-  }
+      routes: [{ name: "home" }],
+    });
+  };
   const logoutHandler = () => {
     if (user.signInMethod === "google") {
       signOut();
@@ -81,54 +83,59 @@ useEffect(() => {
     try {
       await GoogleSignin.signOut();
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
   return (
     <DrawerContentScrollView {...props}>
-      <View style={{ alignItems: 'center', padding: 20 }}>
-        {!loading && <TouchableOpacity
-          activeOpacity={0.8}
-          onPress={() => {
-            if (isAuthenticated) navigation.navigate("profile");
-            else navigation.navigate("login");
-          }}
+      <View style={{ alignItems: "center", padding: 20 }}>
+        {!loading && (
+          <TouchableOpacity
+            activeOpacity={0.8}
+            onPress={() => {
+              if (isAuthenticated) navigation.navigate("profile");
+              else navigation.navigate("login");
+            }}
+          >
+            <Avatar.Image
+              source={{ uri: user?.avatar ? user.avatar.url : defaultImg }}
+              size={100}
+              style={{ backgroundColor: colors.color1 }}
+            />
+          </TouchableOpacity>
+        )}
 
-        >
-          <Avatar.Image
-            source={{ uri: user?.avatar ? user.avatar.url : defaultImg }}
-            size={100}
-            style={{ backgroundColor: colors.color1 }}
-          />
-        </TouchableOpacity>}
-
-        {!loading && <TouchableOpacity
-          activeOpacity={0.8}
-
-          onPress={() => {
-            if (isAuthenticated) navigation.navigate("profile");
-            else navigation.navigate("login");
-          }}
-
-        >
-          <Text style={{ marginTop: 20 }}>{user?.name || "Login"}</Text>
-        </TouchableOpacity>}
-
-
-
+        {!loading && (
+          <TouchableOpacity
+            activeOpacity={0.8}
+            onPress={() => {
+              if (isAuthenticated) navigation.navigate("profile");
+              else navigation.navigate("login");
+            }}
+          >
+            <Text style={{ marginTop: 20 }}>{user?.name || "Login"}</Text>
+          </TouchableOpacity>
+        )}
       </View>
 
-      <DrawerItem label="Home" onPress={navigateToHome} />
-      {user ? (<>
-        <DrawerItem label="Orders" onPress={()=>navigation.navigate('orders')} />
-        </>) : null}
-     
-      {/* <DrawerItemList {...props} /> */}
-      {user && !loadingSignOut && <DrawerItem label="Sign Out" onPress={logoutHandler} />}
+      <DrawerItem label="home" onPress={navigateToHome} />
+      {user ? (
+        <>
+          <DrawerItem
+            label="Orders"
+            onPress={() => navigation.navigate("orders")}
+          />
+        </>
+      ) : null}
 
+      {/* <DrawerItemList {...props} /> */}
+      {user && !loadingSignOut && (
+        <DrawerItem label="Sign Out" onPress={logoutHandler} />
+      )}
     </DrawerContentScrollView>
   );
 };
+
 const HomeStack = () => {
   return (
     <Stack.Navigator
@@ -157,12 +164,11 @@ const HomeStack = () => {
         <Stack.Screen name="forgetpassword" component={ForgetPassword} />
         <Stack.Screen name="verify" component={Verify} />
 
-
         {/* Admin Routes */}
         <Stack.Screen name="adminpanel" component={AdminPanel} />
         <Stack.Screen name="categories" component={Categories} />
         <Stack.Screen name="adminorders" component={AdminOrders} />
-          <Stack.Screen name="analytics" component={Analytics} />
+        <Stack.Screen name="analytics" component={Analytics} />
         <Stack.Screen name="updateproduct" component={UpdateProduct} />
         <Stack.Screen name="updatecategory" component={UpdateCategory} />
         <Stack.Screen name="newproduct" component={NewProduct} />
@@ -170,25 +176,24 @@ const HomeStack = () => {
         <Stack.Screen name="categoryimages" component={CategoryImages} />
       </Stack.Group>
     </Stack.Navigator>
-  )
-}
+  );
+};
 const Main = () => {
+  const dispatch = useDispatch();
 
-  const dispatch = useDispatch()
-
-  const { user } = useSelector((state) => state.user)
+  const { user } = useSelector((state) => state.user);
 
   useEffect(() => {
-    dispatch(loadUser())
-  }, [dispatch])
+    dispatch(loadUser(user));
+  }, [dispatch]);
 
   return (
     <NavigationContainer>
-
-      <Drawer.Navigator initialRouteName="Home" drawerContent={props => <CustomDrawerContent {...props} />}>
+      <Drawer.Navigator
+        initialRouteName="Home"
+        drawerContent={(props) => <CustomDrawerContent {...props} />}
+      >
         <Drawer.Screen name="Home" component={HomeStack} />
-        
-
       </Drawer.Navigator>
 
       <Toast position="top" bottomOffset={20} />
