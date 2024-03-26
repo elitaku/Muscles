@@ -68,6 +68,15 @@ const Profile = ({ navigation, route }) => {
             case "Password":
                 navigation.navigate("changepassword");
                 break;
+            case "People":
+                navigation.navigate("peoplescreen");
+                break;
+            case "Contacts":
+                navigation.navigate("contactscreen");
+                break;
+            case "Message":
+                navigation.navigate("chatscreen");
+                break;
             case "Sign Out":
                 logoutHandler();
                 break;
@@ -191,6 +200,32 @@ const Profile = ({ navigation, route }) => {
                                     text={"Profile"}
                                     icon={"pencil"}
                                 />
+                            </View>
+
+                            <View>
+                                <View
+                                    style={{
+                                        flexDirection: "row",
+                                        margin: 10,
+                                        justifyContent: "space-between",
+                                    }}
+                                >
+                                    <ButtonBox
+                                        handler={navigateHandler}
+                                        text={"People"}
+                                        icon={"human"}
+                                    />
+                                    <ButtonBox
+                                        handler={navigateHandler}
+                                        text={"Message"}
+                                        icon={"message"}
+                                    />
+                                    <ButtonBox
+                                        handler={navigateHandler}
+                                        text={"Contacts"}
+                                        icon={"contacts"}
+                                    />
+                                </View>
                             </View>
 
                            

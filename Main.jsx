@@ -32,6 +32,11 @@ import ProductImages from "./screens/Admin/ProductImages";
 import Analytics from "./screens/Admin/Analytics";
 import Camera from "./screens/Camera";
 
+import PeopleScreen from "./screens/PeopleScreen";
+import ContactsScreen from "./screens/ContactsScreen";
+import ChatsScreen from "./screens/ChatsScreen";
+import ChatMessagesScreen from "./screens/ChatMessagesScreen";
+
 import Comment from "./screens/Comment";
 import { useDispatch, useSelector } from "react-redux";
 import { loadUser, logout } from "./redux/actions/userActions";
@@ -159,6 +164,11 @@ const HomeStack = () => {
         <Stack.Screen name="orders" component={Orders} />
         <Stack.Screen name="camera" component={Camera} />
         <Stack.Screen name="comment" component={Comment} />
+
+        <Stack.Screen name="peoplescreen" component={PeopleScreen} />
+        <Stack.Screen name="contactscreen" component={ContactsScreen} />
+        <Stack.Screen name="chatscreen" component={ChatsScreen} />
+        <Stack.Screen name="chatmessagescreen" component={ChatMessagesScreen} />
 
         {/* Password Reset Routes */}
         <Stack.Screen name="forgetpassword" component={ForgetPassword} />
