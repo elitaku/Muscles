@@ -40,9 +40,14 @@ const Login = ({ navigation }) => {
 
   useEffect(() => {
     console.log(user)
-    if (user && user.googleId) {
-      console.log("User with Google ID found");
-      navigateToHome();
+    if (user) {
+      if (user.googleId) {
+        console.log("User with Google ID found");
+        navigateToHome();
+      } else {
+        console.log("User logged in with normal method");
+        navigateToHome();
+      }
     } else if (newUser) {
       console.log("verified yung token at di pa existing");
       navigation.navigate("signup");
