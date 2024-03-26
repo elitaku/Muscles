@@ -31,15 +31,25 @@ const Login = ({ navigation }) => {
       iosClientId: CLIENT_ID_IOS,
     });
   };
+  const navigateToHome = () => {
+    navigation.reset({
+      index: 0,
+      routes: [{ name: "home" }],
+    });
+  };
 
   useEffect(() => {
-    if (newUser) {
+    console.log(user)
+    if (user && user.googleId) {
+      console.log("User with Google ID found");
+      navigateToHome();
+    } else if (newUser) {
       console.log("verified yung token at di pa existing");
       navigation.navigate("signup");
       // showToast("success", "Kindly complete your profile before continue");
-    } 
-  }, [newUser, navigation]);
-
+    }
+  }, [newUser, user, navigation]);
+  
   useEffect(() => {
     configureGoogleSignIn();
     GoogleSignin.signOut();

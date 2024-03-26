@@ -31,30 +31,37 @@ const SignUp = ({ navigation, route }) => {
     const disableBtn = googleId ? !name || !email || !address || !city || !country || !pinCode :
         !name || !email || !password || !address || !city || !country || !pinCode;
 
-    const submitHandler = () => {
-        const myForm = new FormData();
-
-        myForm.append("name", name);
-        myForm.append("email", email);
-        myForm.append("password", password);
-        myForm.append("address", address);
-        myForm.append("city", city);
-        myForm.append("country", country);
-        myForm.append("pinCode", pinCode);
-        myForm.append("googleId", googleId);
-        if (googleId) {
-            myForm.append("file", avatar);
-        } else {
-            if (avatar !== "") {
+        const submitHandler = async () => {
+            const myForm = new FormData();
+          
+            myForm.append("name", name);
+            myForm.append("email", email);
+            myForm.append("password", password);
+            myForm.append("address", address);
+            myForm.append("city", city);
+            myForm.append("country", country);
+            myForm.append("pinCode", pinCode);
+            myForm.append("googleId", googleId);
+            if (googleId) {
+              myForm.append("file", avatar);
+            } else {
+              if (avatar !== "") {
                 myForm.append("file", {
-                    uri: avatar,
-                    type: mime.getType(avatar),
-                    name: avatar.split("/").pop(),
+                  uri: avatar,
+                  type: mime.getType(avatar),
+                  name: avatar.split("/").pop(),
                 });
+              }
             }
-        }
-        dispatch(register(myForm));
-    };
+          
+            try {
+              await dispatch(register(myForm));
+              navigation.navigate('login');
+            } catch (error) {
+              console.error(error);
+              // handle error here
+            }
+          };
 
     const loading = useMessageAndErrorUser(navigation, dispatch, "profile");
     useEffect(() => {
