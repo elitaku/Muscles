@@ -67,7 +67,7 @@ const CustomDrawerContent = (props) => {
   useEffect(() => {
     configureGoogleSignIn();
   });
-  const navigateToHome = () => {
+  const navigateTohome = () => {
     navigation.reset({
       index: 0,
       routes: [{ name: "home" }],
@@ -118,7 +118,7 @@ const CustomDrawerContent = (props) => {
         )}
       </View>
 
-      <DrawerItem label="home" onPress={navigateToHome} />
+      <DrawerItem label="home" onPress={navigateTohome} />
       {user ? (
         <>
           <DrawerItem
