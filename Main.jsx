@@ -151,7 +151,7 @@ const HomeStack = () => {
       }}
     >
       <Stack.Group>
-        <Stack.Screen name="home" component={Home} />
+        <Stack.Screen name="Home" component={Home} />
         <Stack.Screen name="productdetails" component={ProductDetails} />
         <Stack.Screen name="cart" component={Cart} />
         <Stack.Screen name="wishlist" component={Wishlist} />

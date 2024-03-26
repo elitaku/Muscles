@@ -39,15 +39,14 @@ const Login = ({ navigation }) => {
   };
 
   useEffect(() => {
-    // console.log(user)
-    if (user) {
-      if (user.googleId) {
-        console.log("User with Google ID found");
-        navigateToHome();
-      } else {
-        console.log("User logged in with normal method");
-        navigateToHome();
-      }
+    console.log(user);
+    if (user && user.googleId) {
+      console.log("User with Google ID found");
+      navigateToHome();
+    } else if (user && user.signInMethod === "local") {
+      // User logged in via email and password
+      console.log("User with email found");
+      navigateToHome();
     } else if (newUser) {
       console.log("verified yung token at di pa existing");
       navigation.navigate("signup");
