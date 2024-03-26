@@ -72,7 +72,6 @@ const Login = ({ navigation }) => {
       dispatch(verifyToken(userInfo.idToken));
       setError();
 
-      navigation.navigate("Home");
     } catch (e) {
       setError(e);
     }
