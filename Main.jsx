@@ -190,10 +190,10 @@ const Main = () => {
   return (
     <NavigationContainer>
       <Drawer.Navigator
-        initialRouteName="Home"
+        initialRouteName="home"
         drawerContent={(props) => <CustomDrawerContent {...props} />}
       >
-        <Drawer.Screen name="Home" component={HomeStack} />
+        <Drawer.Screen name="home" component={HomeStack} />
       </Drawer.Navigator>
 
       <Toast position="top" bottomOffset={20} />

@@ -33,13 +33,12 @@ const Login = ({ navigation }) => {
   };
 
   useEffect(() => {
-    console.log(user)
-    if (newUser || user) {
+    if (newUser) {
       console.log("verified yung token at di pa existing");
-      navigation.navigate("home");
+      navigation.navigate("signup");
       // showToast("success", "Kindly complete your profile before continue");
-    }
-  }, [newUser, user, navigation]);
+    } 
+  }, [newUser, navigation]);
 
   useEffect(() => {
     configureGoogleSignIn();
@@ -64,6 +63,7 @@ const Login = ({ navigation }) => {
   const submitHandler = () => {
     dispatch(login(email, password));
   };
+
   const signIn = async () => {
     try {
       await GoogleSignin.hasPlayServices();
@@ -71,10 +71,11 @@ const Login = ({ navigation }) => {
 
       dispatch(verifyToken(userInfo.idToken));
       setError();
-
+      
     } catch (e) {
       setError(e);
     }
+    
   };
 
   return (
