@@ -13,7 +13,7 @@ export const getAllUsers = () => async (dispatch) => {
       `${server}/chat/users`,
 
       {
-        wuthCredentials: true,
+        withCredentials: true,
       }
     );
 
