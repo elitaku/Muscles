@@ -56,6 +56,7 @@ import {
   formStyles as styles,
 } from "./styles/styles";
 import { useMessageAndErrorUser } from "./utils/hooks";
+import UserLists from "./screens/Admin/UserLists";
 const CustomDrawerContent = (props) => {
   const { user, isAuthenticated } = useSelector((state) => state.user);
   const dispatch = useDispatch();
@@ -184,6 +185,7 @@ const HomeStack = () => {
         <Stack.Screen name="newproduct" component={NewProduct} />
         <Stack.Screen name="productimages" component={ProductImages} />
         <Stack.Screen name="categoryimages" component={CategoryImages} />
+        <Stack.Screen name="allusers" component={UserLists} />
       </Stack.Group>
     </Stack.Navigator>
   );

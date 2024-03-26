@@ -106,7 +106,7 @@ const ProductDetails = ({ route: { params } }) => {
         const response = await fetch(`${server}/comment/all/${params.id}`);
         const data = await response.json();
         setComments(data);
-        console.log(data);
+        // console.log(data);
       } catch (error) {
         console.error("Error fetching comments:", error);
       }

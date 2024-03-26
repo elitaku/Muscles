@@ -491,10 +491,35 @@ export const deleteProductImage = (productId, imageId) => async (dispatch) => {
   }
 };
 
+export const deleteUser = (userId) => async (dispatch) => {
+  try {
+    dispatch({
+      type: "deleteUserRequest",
+    });
+
+    const { data } = await axios.delete(
+      `${server}/user/delete/${userId}`,
+      {
+        withCredentials: true,
+      }
+    );
+
+    dispatch({
+      type: "deleteUserSuccess",
+      payload: data.message,
+    });
+  } catch (error) {
+    dispatch({
+      type: "deleteUserFail",
+      payload: error.response.data.message,
+    });
+  }
+};
+
 export const deleteProduct = (productId) => async (dispatch) => {
   try {
     dispatch({
-      type: "deleteProductRequest",
+      type: "deleteUserRequest",
     });
 
     const { data } = await axios.delete(
@@ -515,6 +540,7 @@ export const deleteProduct = (productId) => async (dispatch) => {
     });
   }
 };
+
 
 export const forgetPassword = (email) => async (dispatch) => {
   try {

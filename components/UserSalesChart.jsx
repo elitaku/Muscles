@@ -30,7 +30,7 @@ const UserSalesChart = ({ data }) => {
     // Check if data and data.ordersCountByProduct are defined and an array before trying to map over it
     const transformedData = data && Array.isArray(data.ordersCountByProduct) ? data.ordersCountByProduct.map(item => item.totalAmount) : [];
     const labels = data && Array.isArray(data.ordersCountByProduct) ? data.ordersCountByProduct.map(item => item._id) : [];
-    console.log(data)
+    // console.log(data)
     if (!transformedData.length) {
         return <Text>No orders to display</Text>;
     }

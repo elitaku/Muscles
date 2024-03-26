@@ -10,7 +10,11 @@ import Chart from "../../components/Chart";
 import ProductSalesChart from "../../components/ProductSalesChart";
 import MonthlySalesChart from "../../components/MonthlySalesChart";
 import UserSalesChart from "../../components/UserSalesChart";
-import { useAdminProducts, useMessageAndErrorOther,useChartData } from "../../utils/hooks";
+import {
+  useAdminProducts,
+  useMessageAndErrorOther,
+  useChartData,
+} from "../../utils/hooks";
 import { useDispatch } from "react-redux";
 import { useIsFocused } from "@react-navigation/native";
 import { deleteProduct } from "../../redux/actions/otherActions";
@@ -20,12 +24,12 @@ const AdminPanel = ({ navigation }) => {
   const dispatch = useDispatch();
   const isFocused = useIsFocused();
 
-  const { chartData, chartData2, chartData3, loading, error } = useChartData(dispatch,isFocused);
-  console.log(chartData, chartData2, chartData3, loading, error);
-  const { products } = useAdminProducts(
+  const { chartData, chartData2, chartData3, loading, error } = useChartData(
     dispatch,
     isFocused
   );
+  console.log(chartData, chartData2, chartData3, loading, error);
+  const { products } = useAdminProducts(dispatch, isFocused);
 
   const navigationHandler = (text) => {
     switch (text) {
@@ -43,7 +47,7 @@ const AdminPanel = ({ navigation }) => {
         break;
 
       default:
-        navigation.navigate("adminorders");
+        navigation.navigate("allusers");
         break;
     }
   };
@@ -160,6 +164,23 @@ const AdminPanel = ({ navigation }) => {
                 handler={navigationHandler}
                 reverse={true}
               />
+            </View>
+
+          </View>
+          <View>
+            <View
+              style={{
+                flexDirection: "row",
+                margin: 10,
+                justifyContent: "space-evenly",
+              }}
+            >
+              <AdminButtonBox
+                icon={"account-outline"}
+                text={"All Users"}
+                handler={navigationHandler}
+                reverse={true}
+              />
 
               <AdminButtonBox
                 icon={"plus"}
@@ -190,7 +211,6 @@ const AdminPanel = ({ navigation }) => {
                 ))}
             </View>
           </ScrollView>
-
         </>
       )}
     </View>

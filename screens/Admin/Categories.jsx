@@ -45,7 +45,7 @@ const Categories = ({ navigation, route, navigate }) => {
       name: image.split("/").pop(),
     });
 
-    console.log("FormData:", myForm);
+    // console.log("FormData:", myForm);
 
     dispatch(addCategory(myForm));
   };
