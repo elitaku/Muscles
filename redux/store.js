@@ -29,4 +29,7 @@ export const store = configureStore({
 // export const server = "http://192.168.100.126:5000/api/v1"
 
 //Hotspot ko
-export const server = "http://192.168.124.139:5000/api/v1"
+//export const server = "http://192.168.124.139:5000/api/v1"
+
+//bahay ni ej IP
+export const server = "http://192.168.100.191:5000/api/v1"
