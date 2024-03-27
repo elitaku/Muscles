@@ -1,7 +1,6 @@
 import { TouchableOpacity } from "react-native";
 import React from "react";
 import { Avatar } from "react-native-paper";
-import { FontAwesome } from 'react-native-vector-icons';
 import { colors } from "../styles/styles";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { useDispatch } from "react-redux";
@@ -87,25 +86,23 @@ const Header = ({ back, emptyCart = false, emptyWishlist = false }) => {
       <TouchableOpacity
         style={{
           position: "absolute",
-          right: emptyWishlist ? 80 : 95,
-          top: 22,
+          right: emptyWishlist ? 70 : 70,
+          top: 10,
           zIndex: 10,
         }}
         onPress={handleWishlistPress}
       >
         {emptyWishlist ? (
-          <FontAwesome
-            name="trash"
-            size={38}
+          <Avatar.Icon
+            icon="delete-outline"
             color={colors.color3}
-            style={{ position: "absolute", right: 0, top: 0 }}
+            style={{ backgroundColor: colors.color4 }}
           />
         ) : (
-          <FontAwesome
-            name="heart"
-            size={30}
+          <Avatar.Icon
+            icon="heart-outline"
             color={colors.color3}
-            style={{ position: "absolute", right: -10, top: 5 }}
+            style={{ backgroundColor: colors.color4 }}
           />
         )}
       </TouchableOpacity>

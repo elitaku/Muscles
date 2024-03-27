@@ -14,6 +14,7 @@ const WishlistItem = ({
     removeWishlistHandler,
     addToCartHandler,
     id,
+    navigate,
     }) => {
     return (
         <View
@@ -79,10 +80,10 @@ const WishlistItem = ({
                 >
                 <Avatar.Icon icon={"delete"} size={40}
                 style={{
-                  borderRadius: 5,
-                  backgroundColor: colors.color5,
-                  height: 50,
-                  width: 50,
+                    borderRadius: 5,
+                    backgroundColor: colors.color5,
+                    height: 50,
+                    width: 50,
                 }} />
             </TouchableOpacity>
         </View>
