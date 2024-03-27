@@ -77,7 +77,13 @@ const WishlistItem = ({
             <TouchableOpacity
                 onPress={() => removeWishlistHandler(id, name, amount, imgSrc, stock)}
                 >
-                <Avatar.Icon icon={"delete"} {...iconOptions} />
+                <Avatar.Icon icon={"delete"} size={40}
+                style={{
+                  borderRadius: 5,
+                  backgroundColor: colors.color5,
+                  height: 50,
+                  width: 50,
+                }} />
             </TouchableOpacity>
         </View>
         </View>
