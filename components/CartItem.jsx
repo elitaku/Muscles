@@ -4,6 +4,7 @@ import { colors } from "../styles/styles";
 import { Avatar } from "react-native-paper";
 import { iconOptions } from "../screens/ProductDetails";
 
+
 const CartItem = ({
   name,
   amount,
@@ -12,8 +13,10 @@ const CartItem = ({
   index,
   imgSrc,
   id,
+  price,
   decrementHandler,
   incrementhandler,
+  addToWishlistHandler,
   navigate,
 }) => {
   return (
@@ -64,6 +67,12 @@ const CartItem = ({
         >
           ₹{amount}
         </Text>
+        <TouchableOpacity
+          style={styles.addToWishlistButton}
+          onPress={() => addToWishlistHandler(id, name, price, imgSrc, stock)}
+        >
+          <Text style={styles.addToWishlistText}>Add to Wishlist</Text>
+        </TouchableOpacity>
       </View>
 
       <View style={styles.qtyContainer}>
@@ -78,7 +87,7 @@ const CartItem = ({
         <TouchableOpacity
           onPress={() => incrementhandler(id, name, amount, imgSrc, stock, qty)}
         >
-          <Avatar.Icon icon={"plus"} {...iconOptions} />
+        <Avatar.Icon icon={"minus"} {...iconOptions} />
         </TouchableOpacity>
       </View>
     </View>

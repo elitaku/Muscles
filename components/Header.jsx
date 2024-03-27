@@ -38,6 +38,7 @@ const Header = ({ back, emptyCart = false, emptyWishlist = false }) => {
       navigate.navigate("wishlist");
     }
   };
+  
 
   return (
     <>
@@ -46,7 +47,7 @@ const Header = ({ back, emptyCart = false, emptyWishlist = false }) => {
           style={{
             position: "absolute",
             left: 20,
-            top: 40,
+            top: 20,
             zIndex: 10,
           }}
           onPress={() => navigate.goBack()}

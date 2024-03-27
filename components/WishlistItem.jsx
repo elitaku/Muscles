@@ -10,7 +10,9 @@ const WishlistItem = ({
     stock,
     index,
     imgSrc,
+    price,
     removeWishlistHandler,
+    addToCartHandler,
     id,
     }) => {
     return (
@@ -61,6 +63,14 @@ const WishlistItem = ({
             >
             ₹{amount}
             </Text>
+
+            <TouchableOpacity
+                style={styles.addToCartButton}
+                onPress={() => addToCartHandler(id, name, price, imgSrc, stock)}
+            >
+                <Text style={styles.addToCartText}>Add to Cart</Text>
+            </TouchableOpacity>
+            
         </View>
 
         <View style={styles.iconContainer}>

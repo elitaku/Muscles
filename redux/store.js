@@ -35,5 +35,6 @@ export const server = "https://mbackend-p19q.onrender.com/api/v1"
 
 //bahay ni ej IP 5g
 // export const server = "http://192.168.100.63:5000/api/v1"
+
 //bahay ni ej IP 2.4g
-export const server = "http://192.168.100.193:5000/api/v1"
+// export const server = "http://192.168.100.193:5000/api/v1"

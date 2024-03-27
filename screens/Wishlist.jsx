@@ -7,6 +7,8 @@ import { Button } from "react-native-paper";
 import WishlistItem from "../components/WishlistItem";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
+import { Toast } from "react-native-toast-message/lib/src/Toast";
+
 
 const Wishlist = () => {
     const navigate = useNavigation();
@@ -16,6 +18,31 @@ const Wishlist = () => {
 
     const removeWishlistHandler = (id) => {
         dispatch({ type: "removeFromWishlist", payload: id });
+    };
+
+    const addToCardHandler = (id, name, price, image, stock) => {
+        if (stock === 0)
+        return Toast.show({
+            type: "error",
+            text1: "Out Of Stock",
+        });
+    
+        dispatch({
+            type: "addToCart",
+            payload: {
+                product: id,
+                name,
+                price,
+                image,
+                stock,
+                quantity: 1,
+            },
+        });
+    
+        Toast.show({
+            type: "success",
+            text1: "Added To Cart",
+        });
     };
     
     
@@ -28,7 +55,7 @@ const Wishlist = () => {
         }}
         >
         {/* Header */}
-        {/* <Header back={true} emptyWishlist={true} /> */}
+        <Header back={true} emptyWishlist={true} />
 
 
         {/* Heading */}
@@ -56,6 +83,7 @@ const Wishlist = () => {
                     imgSrc={i.image}
                     index={index}
                     removeWishlistHandler={removeWishlistHandler}
+                    addToCartHandler={addToCardHandler}
                 />
                 ))
             ) : ( 

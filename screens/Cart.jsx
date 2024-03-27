@@ -53,6 +53,26 @@ const Cart = () => {
       },
     });
   };
+
+  const addToWishlistHandler = (id, name, price, image, stock) => {
+    dispatch({
+      type: "addToWishlist",
+      payload: {
+        product:
+          id,
+          name,
+          price,
+          image,
+          stock,
+      }
+    })
+    
+    Toast.show({
+      type: "success",
+      text1: "Added To Wishlist",
+    });
+  };
+
   return (
     <View
       style={{
@@ -61,7 +81,7 @@ const Cart = () => {
       }}
     >
       {/* Header */}
-      {/* <Header back={true} emptyCart={true} /> */}
+      <Header back={true} emptyCart={true} />
 
       {/* Heading */}
       <Heading
@@ -91,6 +111,7 @@ const Cart = () => {
                 qty={i.quantity}
                 incrementhandler={incrementHandler}
                 decrementHandler={decrementHandler}
+                addToWishlistHandler={addToWishlistHandler}
               />
             ))
           ) : (
