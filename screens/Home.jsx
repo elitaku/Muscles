@@ -25,12 +25,18 @@ const Home = () => {
   const isFocused = useIsFocused();
 
   const { products } = useSelector((state) => state.product);
+   const { user } = useSelector((state) => state.user );
 
+console.log(user)
   const categoryButtonHandler = (id) => {
     setCategory(id);
   };
 
   const addToCardHandler = (id, name, price, image, stock) => {
+    if (!user) {
+      navigate.navigate("login"); 
+      return;
+    }
     if (stock === 0)
       return Toast.show({
         type: "error",
@@ -56,6 +62,11 @@ const Home = () => {
   };
 
   const addToWishlistHandler = (id, name, price, image, stock) => {
+    if (!user) {
+      // If no user is logged in, navigate to the login page
+      navigate.navigate("login"); // Replace "Login" with your actual login screen name
+      return;
+    }
     dispatch({
       type: "addToWishlist",
       payload: {

@@ -16,7 +16,7 @@ import Carousel from "react-native-snap-carousel";
 import { Avatar, Button } from "react-native-paper";
 import Toast from "react-native-toast-message";
 import { useDispatch, useSelector } from "react-redux";
-import { useIsFocused } from "@react-navigation/native";
+import { useIsFocused, useNavigation } from "@react-navigation/native";
 import { getProductDetails } from "../redux/actions/productActions";
 import { server } from "../redux/store";
 import { AirbnbRating } from "react-native-ratings";
@@ -28,15 +28,17 @@ const SLIDER_WIDTH = Dimensions.get("window").width;
 const ITEM_WIDTH = SLIDER_WIDTH;
 
 const ProductDetails = ({ route: { params } }) => {
+  const navigate = useNavigation();
   const dispatch = useDispatch();
   const isCarousel = useRef(null);
   const isFocused = useIsFocused();
-  const user = useSelector((state) => state.user);
+  const { user } = useSelector((state) => state.user );
+
   const comments = useSelector((state) => state.comment.comments); // Fetch comments from Redux store
   const average = useSelector((state) => state.comment.averageRating); // Fetch comments from Redux store
   const loading = useSelector((state) => state.comment.loading); // Fetch loading state from Redux store
 
-  console.log(average)
+  console.log("current user:",user)
   const {
     product: { name, price, stock, description, images },
   } = useSelector((state) => state.product);
@@ -66,6 +68,10 @@ const ProductDetails = ({ route: { params } }) => {
   };
 
   const addToCardHandler = () => {
+    if (!user) {
+      navigate.navigate("login"); 
+      return;
+    }
     if (stock === 0) {
       return Toast.show({
         type: "error",
@@ -92,6 +98,10 @@ const ProductDetails = ({ route: { params } }) => {
   };
 
   const addToWishlistHandler = (id, name, price, image, stock) => {
+    if (!user) {
+      navigate.navigate("login"); 
+      return;
+    }
     dispatch({
       type: "addToWishlist",
       payload: {
