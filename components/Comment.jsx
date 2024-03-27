@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, TextInput, Button, StyleSheet } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { Rating } from 'react-native-ratings';
 import Toast from 'react-native-toast-message';
-import { addComment } from "../redux/actions/commentActions";
+import { addComment, getAllComments, getProductRatings } from "../redux/actions/commentActions";
 
 const Comment = () => {
   const user = useSelector(state => state.user);
@@ -24,39 +24,41 @@ const Comment = () => {
   };
 
   const handleAddComment = () => {
-    console.log("Submitting comment...");
-  
     if (!text) {
       showToast('error', 'Please enter a comment.');
       setIsLoading(false); 
       return;
     }
-  
+
     setIsLoading(true);
-  
+
     dispatch(addComment(text, user.user._id, product.product._id, rating))
       .then((response) => {
         setNewCommentText("");
         setRating(0);
-        console.log("Comment added successfully:", response.data); 
         showToast('success', 'Comment added successfully');
+        dispatch(getAllComments(product.product._id));
+      dispatch(getProductRatings(product.product._id));
       })
       .catch((error) => {
         console.error("Error adding comment:", error);
         showToast('error', 'Purchase required for comments');
         if (error.response) {
           console.error("Server response data:", error.response.data);
-          showToast('error', error.response.data.message); 
+          showToast('error', error.response.data.message);
         }
       })
       .finally(() => {
-        setIsLoading(false); 
+        setIsLoading(false);
       });
-};
+  };
 
-  
-  
-  
+  useEffect(() => {
+    if (product.product._id) {
+      dispatch(getAllComments(product.product._id));
+      dispatch(getProductRatings(product.product._id));
+    }
+  }, [dispatch, product.product._id]);
 
   return (
     <View style={styles.container}>
