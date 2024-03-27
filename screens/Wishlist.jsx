@@ -61,7 +61,7 @@ const Wishlist = () => {
         {/* Heading */}
         <Heading
             text1="Wishlist"
-            containerStyle={{ paddingTop: 10, marginLeft: 35 }}
+            containerStyle={{ paddingTop: 50, marginLeft: 35 }}
         />
 
         <View

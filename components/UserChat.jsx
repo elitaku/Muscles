@@ -7,28 +7,40 @@ import {
   defaultStyle,
   formHeading,
 } from "../styles/styles";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { fetchMessages } from "../redux/actions/chatActions";
 
 const UserChat = ({ item }) => {
   const { messages } = useSelector((state) => state.chat)
   const navigation = useNavigation();
-
+  const [lastMessage, setLastMessage] = useState(null)
   useEffect(() => {
     fetchMessages();
   }, []);
 
-  const getLastMessage = () => {
+  const getLastMessage = (item) => {
     const userMessages = messages.filter(
-      (message) => message.messageType === "text"
+      (message) => {
+        
+        return message.messageType === "text" && (message.senderId._id === item._id || message.recepientId === item._id)
+      }
     );
 
     const n = userMessages.length;
 
     return userMessages[n - 1];
   };
-  const lastMessage = getLastMessage();
   
+  useEffect(()=>{
+    const message = getLastMessage(item);
+    setLastMessage(message);
+    
+  }, [messages,item])
+  useEffect(()=>{
+    if (lastMessage){
+      console.log(lastMessage)
+    }
+  },[lastMessage])
   const formatTime = (time) => {
     const options = { hour: "numeric", minute: "numeric" };
     return new Date(time).toLocaleString("en-US", options);

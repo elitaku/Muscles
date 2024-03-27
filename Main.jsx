@@ -124,7 +124,7 @@ const CustomDrawerContent = (props) => {
         )}
       </View>
 
-      <DrawerItem label="home" onPress={navigateTohome} />
+      <DrawerItem label="Home" onPress={navigateTohome} />
       {user ? (
         <>
           <DrawerItem
@@ -151,7 +151,7 @@ const HomeStack = () => {
       }}
     >
       <Stack.Group>
-        <Stack.Screen name="Home" component={Home} />
+        <Stack.Screen name="home" component={Home} />
         <Stack.Screen name="productdetails" component={ProductDetails} />
         <Stack.Screen name="cart" component={Cart} />
         <Stack.Screen name="wishlist" component={Wishlist} />
@@ -202,10 +202,10 @@ const Main = () => {
   return (
     <NavigationContainer>
       <Drawer.Navigator
-        initialRouteName="home"
+        initialRouteName="Home"
         drawerContent={(props) => <CustomDrawerContent {...props} />}
       >
-        <Drawer.Screen name="home" component={HomeStack} />
+        <Drawer.Screen name="Home" component={HomeStack} />
       </Drawer.Navigator>
 
       <Toast position="top" bottomOffset={20} />

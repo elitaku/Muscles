@@ -47,7 +47,7 @@ const Header = ({ back, emptyCart = false, emptyWishlist = false }) => {
           style={{
             position: "absolute",
             left: 20,
-            top: 20,
+            top: 10,
             zIndex: 10,
           }}
           onPress={() => navigate.goBack()}
@@ -68,7 +68,7 @@ const Header = ({ back, emptyCart = false, emptyWishlist = false }) => {
         style={{
           position: "absolute",
           right: 20,
-          top: 40,
+          top: 10,
           zIndex: 10,
         }}
         onPress={handleCartPress}
@@ -88,7 +88,7 @@ const Header = ({ back, emptyCart = false, emptyWishlist = false }) => {
         style={{
           position: "absolute",
           right: emptyWishlist ? 80 : 95,
-          top: 60,
+          top: 22,
           zIndex: 10,
         }}
         onPress={handleWishlistPress}
@@ -96,16 +96,16 @@ const Header = ({ back, emptyCart = false, emptyWishlist = false }) => {
         {emptyWishlist ? (
           <FontAwesome
             name="trash"
-            size={24}
+            size={38}
             color={colors.color3}
             style={{ position: "absolute", right: 0, top: 0 }}
           />
         ) : (
           <FontAwesome
             name="heart"
-            size={24}
+            size={30}
             color={colors.color3}
-            style={{ position: "absolute", right: 0, top: 0 }}
+            style={{ position: "absolute", right: -10, top: 5 }}
           />
         )}
       </TouchableOpacity>

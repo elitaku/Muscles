@@ -87,7 +87,7 @@ const CartItem = ({
         <TouchableOpacity
           onPress={() => incrementhandler(id, name, amount, imgSrc, stock, qty)}
         >
-        <Avatar.Icon icon={"minus"} {...iconOptions} />
+        <Avatar.Icon icon={"plus"} {...iconOptions} />
         </TouchableOpacity>
       </View>
     </View>

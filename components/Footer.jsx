@@ -25,7 +25,7 @@ const Footer = ({ activeRoute = "home" }) => {
         navigate.navigate("wishlist");
         break;
       default:
-        navigate.navigate("home");
+        navigate.navigate("Home");
         break;
     }
   };
