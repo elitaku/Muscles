@@ -21,24 +21,34 @@ import { getProductDetails } from "../redux/actions/productActions";
 import { server } from "../redux/store";
 import { AirbnbRating } from "react-native-ratings";
 import { Table, Row, Rows, Cell } from "react-native-table-component";
-import { deleteComment } from "../redux/actions/commentActions";
+import { deleteComment, getAllComments, getProductRatings } from "../redux/actions/commentActions";
+import { FontAwesome } from 'react-native-vector-icons';
+
 const SLIDER_WIDTH = Dimensions.get("window").width;
 const ITEM_WIDTH = SLIDER_WIDTH;
-import { FontAwesome } from 'react-native-vector-icons';
 
 const ProductDetails = ({ route: { params } }) => {
   const dispatch = useDispatch();
+  const isCarousel = useRef(null);
   const isFocused = useIsFocused();
   const user = useSelector((state) => state.user);
+  const comments = useSelector((state) => state.comment.comments); // Fetch comments from Redux store
+  const average = useSelector((state) => state.comment.averageRating); // Fetch comments from Redux store
+  const loading = useSelector((state) => state.comment.loading); // Fetch loading state from Redux store
 
+  console.log(average)
   const {
     product: { name, price, stock, description, images },
   } = useSelector((state) => state.product);
 
-  const [comments, setComments] = useState([]);
-  const isCarousel = useRef(null);
   const [quantity, setQuantity] = useState(1);
   const isOutOfStock = stock === 0;
+
+  useEffect(() => {
+    dispatch(getAllComments(params.id)); // Fetch comments when component mounts
+    dispatch(getProductDetails(params.id));
+    dispatch(getProductRatings(params.id));
+  }, [dispatch, params.id, isFocused]);
 
   const incrementQty = () => {
     if (stock <= quantity) {
@@ -85,12 +95,11 @@ const ProductDetails = ({ route: { params } }) => {
     dispatch({
       type: "addToWishlist",
       payload: {
-        product:
-          id,
-          name,
-          price,
-          image,
-          stock,
+        product: id,
+        name,
+        price,
+        image,
+        stock,
       }
     })
     
@@ -99,25 +108,6 @@ const ProductDetails = ({ route: { params } }) => {
       text1: "Added To Wishlist",
     });
   };
-
-  useEffect(() => {
-    const fetchComments = async () => {
-      try {
-        const response = await fetch(`${server}/comment/all/${params.id}`);
-        const data = await response.json();
-        setComments(data);
-        // console.log(data);
-      } catch (error) {
-        console.error("Error fetching comments:", error);
-      }
-    };
-    fetchComments();
-  }, [params.id, isFocused]);
-
-  useEffect(() => {
-    "";
-    dispatch(getProductDetails(params.id));
-  }, [dispatch, params.id, isFocused]);
 
   const handleDeleteComment = async (commentId) => {
     try {
@@ -134,7 +124,6 @@ const ProductDetails = ({ route: { params } }) => {
       });
     }
   };
-
   return (
     <ScrollView
       style={{ ...defaultStyle, padding: 0, backgroundColor: colors.color1 }}
@@ -239,7 +228,7 @@ const ProductDetails = ({ route: { params } }) => {
         <AirbnbRating
           count={5}
           reviews={["Terrible", "Meh", "Hmm...", "Very Good", "Jesus"]}
-          defaultRating={5}
+          defaultRating={average}
           size={30}
         />
 

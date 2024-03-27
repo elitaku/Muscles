@@ -70,6 +70,8 @@ const ChatMessagesScreen = () => {
     dispatch(sendMessage(message, messageType, imageUri, userId, recepientId));
     setMessage("");
     setSelectedImage("");
+    dispatch(fetchRecepientData(recepientId));
+    dispatch(fetchMessages(userId, recepientId));
   };
 
   //   try {
