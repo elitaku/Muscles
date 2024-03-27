@@ -1,9 +1,7 @@
-import { View, Text, ScrollView } from "react-native";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { View, Text, ScrollView, ToastAndroid } from "react-native";
 import { colors, defaultStyle, formHeading } from "../../styles/styles";
 import Header from "../../components/Header";
-// import Loader from "../../components/Loader";
-import { useMessageAndErrorOther } from "../../utils/hooks";
 import { useIsFocused } from "@react-navigation/native";
 import { Headline } from "react-native-paper";
 import { useDispatch, useSelector } from "react-redux";
@@ -14,24 +12,31 @@ import UserList from "../../components/UserList";
 const UserLists = ({ navigation }) => {
   const isFocused = useIsFocused();
   const dispatch = useDispatch();
-
   const { users } = useSelector((state) => state.chat);
-
+  const [showMessage, setShowMessage] = useState(false);
 
   const deleteHandler = (id) => {
     dispatch(deleteUser(id));
+    setShowMessage(true);
+    
   };
 
   useEffect(() => {
-    
     const timeOutId = setTimeout(() => {
       dispatch(getAllUsers());
-    }, 200)
+    }, 200);
     return () => {
-      clearTimeout(timeOutId)
-    }
-
+      clearTimeout(timeOutId);
+    };
   }, [dispatch, isFocused]);
+
+  useEffect(() => {
+    if (showMessage) {
+      // Show message using ToastAndroid
+      ToastAndroid.show("User deleted completely", ToastAndroid.SHORT);
+      setShowMessage(false);
+    }
+  }, [showMessage]);
 
   return (
     <View
@@ -65,12 +70,8 @@ const UserLists = ({ navigation }) => {
                 address={user.address}
                 city={user.city}
                 country={user.country}
-                // pinCode={user.pinCode}
-                // avatar={user.avatar}
-                // uri={user.avatar ? user.avatar.uri : null}
                 admin={true}
                 deleteHandler={deleteHandler}
-                // loading={processUsersLoading}
               />
             ))
           ) : (
