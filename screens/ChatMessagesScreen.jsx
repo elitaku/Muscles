@@ -25,12 +25,12 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import * as ImagePicker from "expo-image-picker";
 import Footer from "../components/Footer";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchMessages, fetchRecepientData, sendMessage } from "../redux/actions/chatActions";
+import { fetchAllMessages, fetchMessages, fetchRecepientData, sendMessage } from "../redux/actions/chatActions";
 
 const ChatMessagesScreen = () => {
   const { user } = useSelector((state) => state.user);
   const { recepientData } = useSelector((state) => state.chat)
-  const { messages } = useSelector((state) => state.chat)
+  const { messages, loading } = useSelector((state) => state.chat)
   const userId = user._id
 
   const [showEmojiSelector, setShowEmojiSelector] = useState(false);
@@ -62,6 +62,7 @@ const ChatMessagesScreen = () => {
   };
 
   useEffect(() => {
+    dispatch({type: "resetMessages"})
     dispatch(fetchRecepientData(recepientId));
     dispatch(fetchMessages(userId, recepientId));
   }, [dispatch, recepientId]);
@@ -72,6 +73,7 @@ const ChatMessagesScreen = () => {
     setSelectedImage("");
     dispatch(fetchRecepientData(recepientId));
     dispatch(fetchMessages(userId, recepientId));
+    dispatch(fetchAllMessages(userId))
   };
 
   //   try {
@@ -139,6 +141,7 @@ const ChatMessagesScreen = () => {
           ref={scrollViewRef} 
           contentContainerStyle={{flexGrow:1}} 
           onContentSizeChange={handleContentSizeChange}
+
           >
           {messages.map((item, index) => {
             if (item.messageType === "text") {
@@ -166,7 +169,7 @@ const ChatMessagesScreen = () => {
                           maxWidth: "60%",
                         },
 
-                    isSelected && { width: "100%", backgroundColor: "#F0FFFF" },
+                    isSelected && { backgroundColor: "#F0FFFF" },
                   ]}
                 >
                   <Text
@@ -253,7 +256,7 @@ const ChatMessagesScreen = () => {
             paddingVertical: 10,
             borderTopWidth: 1,
             borderTopColor: "#dddddd",
-            marginBottom: showEmojiSelector ? 0 : 80,
+            marginBottom: showEmojiSelector ? 0 : 0,
           }}
         >
           <Entypo
@@ -317,7 +320,7 @@ const ChatMessagesScreen = () => {
           />
         )}
       </KeyboardAvoidingView>
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 };

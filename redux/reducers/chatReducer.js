@@ -10,7 +10,8 @@ const initialState = {
   contacts: [],
   contact: {},
   recepientData: {},
-  messages: [] 
+  messages: [],
+  allMessages: []
 };
 
 export const chatReducer = createReducer(initialState, (builder) => {
@@ -70,7 +71,10 @@ export const chatReducer = createReducer(initialState, (builder) => {
       state.loading = false;
       state.messages = action.payload;
     })
-
+    .addCase("fetchAllMessagesSuccess", (state, action) => {
+      state.loading = false;
+      state.allMessages = action.payload;
+    })
     .addCase("getAllUsersFail", (state, action) => {
       state.loading = false;
       state.error = action.payload;
@@ -103,11 +107,17 @@ export const chatReducer = createReducer(initialState, (builder) => {
       state.loading = false;
       state.error = action.payload;
     })
-
+    .addCase("fetchAllMessagesFail", (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    })
     .addCase("clearError", (state) => {
       state.error = null;
     })
     .addCase("clearMessage", (state) => {
       state.message = null;
-    });
+    })
+    .addCase("resetMessages", (state)=>{
+      state.messages = []
+    })
 });

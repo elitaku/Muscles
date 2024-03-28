@@ -201,7 +201,26 @@ export const fetchRecepientData = (recepientId) => async (dispatch) => {
     });
   }
 };
+export const fetchAllMessages = (userId) => async (dispatch) => { 
+  try {
+    const response = await axios.get(
+      `${server}/chat/getAllMessages/${userId}`
+    );
+    const data = await response.data.messages;
 
+    dispatch({
+      type: "fetchAllMessagesSuccess",
+      payload: data,
+    });
+  } catch (error) {
+    console.log("Error fetching messages:", error);
+
+    dispatch({
+      type: "fetchAllMessagesFail",
+      payload: error.message,
+    });
+  }
+}
 export const fetchMessages = (userId, recipientId) => async (dispatch) => {
   try {
     const response = await axios.get(
