@@ -84,6 +84,7 @@ const CustomDrawerContent = (props) => {
       signOut();
     }
     dispatch(logout());
+    dispatch({type: "resetContacts"})
   };
   const signOut = async () => {
     try {

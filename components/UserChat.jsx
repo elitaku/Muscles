@@ -11,7 +11,7 @@ import { useSelector, useDispatch } from "react-redux";
 
 import { loadUser } from "../redux/actions/userActions";
 
-const UserChat = ({ item, lastMessage }) => {
+const UserChat = ({ item, lastMessage, newMessages, setNewMessages }) => {
   
   const navigation = useNavigation();
   
@@ -48,7 +48,13 @@ const UserChat = ({ item, lastMessage }) => {
         navigation.navigate("chatmessagescreen", {
           recepientId: item._id,
         })
-        setHasBeenPressed(true);
+        // setHasBeenPressed(true);
+        setNewMessages((prevNewMessages) => ({
+          ...prevNewMessages,
+          [item._id]: false,
+        }, ()=>{
+          console.log(newMessages)
+        }))
       }
       }
       style={{
@@ -69,13 +75,13 @@ const UserChat = ({ item, lastMessage }) => {
       />
 
       <View style={{ flex: 1 }}>
-        <Text style={{ fontSize: 15, fontWeight: "500" }}>{item?.name}</Text>
+        <Text style={{ fontSize: 15, fontWeight: newMessages[item._id] ? "bold" : "500" }}>{item?.name}</Text>
         {lastMessage[item._id] && (
           <Text
             style={{
               marginTop: 3,
-              color: "gray" ,
-              fontWeight:"500",
+              color:newMessages[item._id] ? "black" : "gray" ,
+              fontWeight:newMessages[item._id] ? "bold" :"500",
 
             }}
           >
@@ -88,8 +94,8 @@ const UserChat = ({ item, lastMessage }) => {
         <Text
           style={{
             fontSize: 11,
-            fontWeight: "400",
-            color: "#585858",
+            fontWeight:newMessages[item._id] ? "bold" :"400",
+            color: newMessages[item._id] ? "black" :"#585858",
           }}
         >
           {lastMessage[item._id] && formatTime(lastMessage[item._id]?.timeStamp)}

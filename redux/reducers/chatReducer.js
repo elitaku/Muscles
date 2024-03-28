@@ -120,4 +120,7 @@ export const chatReducer = createReducer(initialState, (builder) => {
     .addCase("resetMessages", (state)=>{
       state.messages = []
     })
+    .addCase("resetContacts", (state)=>{
+      state.contacts = []
+    })
 });

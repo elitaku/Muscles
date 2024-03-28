@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View ,ScrollView, Pressable} from "react-native";
+import { StyleSheet, Text, View, ScrollView, Pressable } from "react-native";
 import React, { useEffect, useState } from "react";
 import { useIsFocused, useNavigation } from "@react-navigation/native";
 import {
@@ -14,31 +14,57 @@ import UserChat from "../components/UserChat";
 import { fetchAllMessages } from "../redux/actions/chatActions";
 import { loadUser } from "../redux/actions/userActions";
 const ChatsScreen = () => {
-  
-  const { contacts } = useSelector((state) => state.chat)
+
+  const { loading, contacts } = useSelector((state) => state.chat)
   const dispatch = useDispatch();
   const isFocused = useIsFocused();
   const [lastMessage, setLastMessage] = useState({});
-  const {allMessages} = useSelector(state => state.chat)
-  const {user} = useSelector(state => state.user);
-  useEffect(()=>{
-    dispatch(loadUser())
-  },[])
+  const [newMessages, setNewMessages] = useState({});
+  const { allMessages } = useSelector(state => state.chat)
+  const { user } = useSelector(state => state.user);
   useEffect(() => {
-    reloadMessages(user,contacts)
-  }, [user, contacts]); 
+    
+    dispatch(loadUser())
+  }, [])
+  useEffect(() => {
+    let isMounted = true;
+    if (isMounted) {
+      reloadMessages(user, contacts)
+    }
+    return () => { isMounted = false }
+
+  }, [user, contacts]);
 
   const reloadMessages = (user, contacts) => {
-    if (contacts.length>0 && user){
-      contacts.map((item)=>{
+    if (contacts.length > 0 && user) {
+      contacts.map((item) => {
         if (item) {
           dispatch(fetchAllMessages(user._id)).then(() => {
             if (allMessages.length > 0) {
               const lastMessage = getLastMessage(item, user);
-              setLastMessage((prevLastMessages) => ({
-                ...prevLastMessages,
-                [item._id]: lastMessage,
-              }));
+              setLastMessage((prevLastMessages) => {
+                // Check if there's a new message
+                if (
+                  lastMessage !== prevLastMessages[item._id] &&
+                  lastMessage.senderId._id !== user._id && !newMessages[item._id]
+                ) {
+                  setNewMessages((prevNewMessages) => ({
+                    ...prevNewMessages,
+                    [item._id]: true,
+                  }));
+                } else {
+                  setNewMessages((prevNewMessages) => ({
+                    ...prevNewMessages,
+                    [item._id]: false,
+                  }));
+                }
+
+                return {
+                  ...prevLastMessages,
+                  [item._id]: lastMessage,
+                };
+              });
+
             }
           });
         }
@@ -46,18 +72,21 @@ const ChatsScreen = () => {
     }
   }
   useEffect(() => {
-    
-    const timeOutId = setTimeout(() => {
-      dispatch(fetchAcceptedContacts());
-    }, 200)
-    return () => {
-      clearTimeout(timeOutId)
-    }
-    
+    dispatch(fetchAcceptedContacts());
+    // const timeOutId = setTimeout(() => {
+    //   dispatch(fetchAcceptedContacts());
+    // }, 200)
+    // return () => {
+    //   clearTimeout(timeOutId)
+    // }
+
   }, [dispatch, isFocused]);
+  useEffect(() => {
+    if (lastMessage) {
+      console.log(lastMessage)
+    }
+  }, [lastMessage])
   const getLastMessage = (item, user) => {
-
-
 
     const userMessages = allMessages.filter(
       (message) => {
@@ -71,22 +100,24 @@ const ChatsScreen = () => {
   };
 
   return (
-    
+
     <>
-    <View style={defaultStyle}>
-      <View style={{ marginBottom: 20 }}>
+      <View style={defaultStyle}>
+        <View style={{ marginBottom: 20 }}>
           <Text style={formHeading}>Messages</Text>
+        </View>
+        {!loading &&
+          <ScrollView showsVerticalScrollIndicator={false}>
+            <Pressable>
+              {contacts.map((item, index) => (
+                <UserChat key={index} item={item} lastMessage={lastMessage} newMessages={newMessages} setNewMessages={setNewMessages} />
+              ))}
+            </Pressable>
+          </ScrollView>}
       </View>
-        <ScrollView showsVerticalScrollIndicator={false}>
-        <Pressable>
-            {contacts.map((item,index) => (
-                <UserChat key={index} item={item} lastMessage={lastMessage}/>
-            ))}
-        </Pressable>
-      </ScrollView>
-    </View>
-    <Footer />
-  </>
+
+      <Footer />
+    </>
   );
 };
 
